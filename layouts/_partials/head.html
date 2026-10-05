@@ -96,7 +96,9 @@
 {{- with site.Params.assets.apple_touch_icon }}
 <link rel="apple-touch-icon" href="{{ . | absURL }}">
 {{- end }}
-<link rel="mask-icon" href="{{ site.Params.assets.safari_pinned_tab | default "safari-pinned-tab.svg" | absURL }}">
+{{- with site.Params.assets.safari_pinned_tab }}
+<link rel="mask-icon" href="{{ . | absURL }}">
+{{- end }}
 <meta name="theme-color" content="{{ site.Params.assets.theme_color | default "#2e2e33" }}">
 <meta name="msapplication-TileColor" content="{{ site.Params.assets.msapplication_TileColor | default "#2e2e33" }}">
 

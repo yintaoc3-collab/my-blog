@@ -1,9 +1,9 @@
 <a class="skip-link" href="#main-content">跳到正文</a>
 <header class="site-header"><div class="site-nav">
-  <a class="site-brand" href="{{ "/" | relLangURL }}" aria-label="{{ site.Title }}，返回首页"><span class="brand-mark" aria-hidden="true">银<span></span></span><span class="brand-name">{{ site.Title }}<small>BUILD · SHARE · KEEP</small></span></a>
+  <a class="site-brand" href="{{ "" | relLangURL }}" aria-label="{{ site.Title }}，返回首页"><span class="brand-mark" aria-hidden="true">银<span></span></span><span class="brand-name">{{ site.Title }}<small>BUILD · SHARE · KEEP</small></span></a>
   <nav class="site-menu" id="site-menu" aria-label="主导航">{{ range site.Menus.main }}{{ if ne .Identifier "search" }}<a href="{{ .URL | relLangURL }}"{{ if or (eq $.RelPermalink (.URL | relLangURL)) (and $.Section (hasPrefix .URL (printf "/%s/" $.Section))) }} aria-current="page"{{ end }}>{{ .Name }}</a>{{ end }}{{ end }}</nav>
   <div class="nav-tools">
-    <a class="icon-button" href="{{ "/search/" | relLangURL }}" aria-label="搜索文章" title="搜索文章">{{ partial "ui-icon.html" "search" }}</a>
+    <a class="icon-button" href="{{ "search/" | relLangURL }}" aria-label="搜索文章" title="搜索文章">{{ partial "ui-icon.html" "search" }}</a>
     <button class="icon-button" id="theme-toggle" aria-label="切换浅色或深色主题" title="切换主题"><span class="icon-moon">{{ partial "ui-icon.html" "moon" }}</span><span class="icon-sun">{{ partial "ui-icon.html" "sun" }}</span></button>
     <a class="github-button" href="https://github.com/yintaoc3-collab" target="_blank" rel="noopener noreferrer">{{ partial "ui-icon.html" "github" }}<span>GitHub</span></a>
     <button class="icon-button menu-toggle" id="menu-toggle" aria-label="展开导航菜单" aria-expanded="false" aria-controls="site-menu">{{ partial "ui-icon.html" "menu" }}</button>

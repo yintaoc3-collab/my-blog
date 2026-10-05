@@ -34,7 +34,7 @@ params:
     Title: "把想法做成作品，把经验写成记录。"
     Content: "这里收集我的嵌入式作品、开源方案、技术笔记，以及值得留下的工具和资源。"
   assets:
-    favicon: "/favicon.svg"
+    favicon: "favicon.svg"
     disableHLJS: true
   label:
     text: "一只无辜的银"
