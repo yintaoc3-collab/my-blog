@@ -1,0 +1,20 @@
+{{- with site.Params.homeInfoParams }}
+<article class="first-entry home-info workshop-intro">
+  <p class="workshop-eyebrow">个人作品 · 开源分享 · 技术记录</p>
+  <header class="entry-header"><h1>{{ .Title | markdownify }}</h1></header>
+  <div class="entry-content md-content">{{ .Content | markdownify }}</div>
+  <div class="workshop-links">
+    <a class="workshop-primary" href="{{ "projects/" | relURL }}">看看嵌入式作品 <span aria-hidden="true">↗</span></a>
+    <a href="{{ "about/" | relURL }}">关于我 <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<div class="workshop-sections" aria-label="内容栏目">
+{{- range $entry := slice (dict "url" "projects/" "title" "嵌入式作品" "desc" "实物、固件与实现过程" "index" "01") (dict "url" "opensource/" "title" "开源方案" "desc" "设计思路、源码与复现方法" "index" "02") (dict "url" "notes/" "title" "技术笔记" "desc" "开发记录与调试经验" "index" "03") (dict "url" "goodies/" "title" "好物分享" "desc" "工具、脚本与实用资料" "index" "04") }}
+  <a class="workshop-section" href="{{ $entry.url | relURL }}">
+    <span class="workshop-section-number">{{ $entry.index }}</span>
+    <strong>{{ $entry.title }}</strong><span>{{ $entry.desc }}</span>
+  </a>
+{{- end }}
+</div>
+<div class="workshop-recent"><h2>最新记录</h2><a href="{{ "tags/" | relURL }}">按标签浏览 →</a></div>
+{{- end }}

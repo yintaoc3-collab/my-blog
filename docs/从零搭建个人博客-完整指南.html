@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta name="generator" content="Hugo 0.167.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="从本地预览到 GitHub 免费上线，再到发文章、备份、恢复的完整中文教程。">
+  <title>从零搭建个人博客：Windows &#43; VS Code 完整操作指南</title>
+  <style>
+    :root{--ink:#24332f;--muted:#61716b;--line:#dce4de;--paper:#fffdf7;--green:#176b53;--soft:#edf4ef}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f0f3ee;color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;line-height:1.85;font-size:16px}
+    .shell{max-width:1380px;margin:auto;display:grid;grid-template-columns:310px minmax(0,1fr);gap:26px;padding:30px 24px}aside{position:sticky;top:24px;height:calc(100vh - 48px);overflow:auto;padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:12px}aside strong{font-size:19px;display:block}aside p{font-size:13px;color:var(--muted);margin:6px 0 16px}
+    aside ul{list-style:none;padding:0;margin:0}aside li{margin:5px 0}aside ul ul{margin:4px 0 8px;padding-left:12px;border-left:2px solid var(--line)}aside a{text-decoration:none;color:var(--ink);font-size:14px;line-height:1.5;display:block;padding:4px 0}aside a:hover{color:var(--green)}
+    main{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:44px 52px;box-shadow:0 6px 22px #23352c08}h1{font-size:32px;line-height:1.4;letter-spacing:-.3px;margin:0 0 20px}h2{font-size:24px;margin-top:54px;padding-top:22px;border-top:2px solid var(--line);line-height:1.5}h3{font-size:19px;margin-top:32px;line-height:1.6}p{margin:15px 0}a{color:var(--green);text-underline-offset:3px;overflow-wrap:anywhere}strong{font-weight:700}li{margin:7px 0}ol,ul{padding-left:26px}
+    code{font-family:Consolas,"Cascadia Code",monospace;font-size:.9em;background:var(--soft);padding:2px 6px;border-radius:4px;overflow-wrap:anywhere}pre{padding:18px 20px;overflow:auto;background:#f3f5f0!important;border:1px solid var(--line);border-radius:8px;line-height:1.6}pre code{padding:0;background:none;overflow-wrap:normal;font-size:14px}.highlight pre{margin:16px 0}
+    table{display:block;overflow-x:auto;max-width:100%;border-collapse:collapse;font-size:14px;margin:24px 0}th,td{border:1px solid var(--line);padding:12px 14px;min-width:140px;vertical-align:top}th{background:var(--soft);text-align:left}tr:nth-child(even){background:#f7f9f4}blockquote{border-left:4px solid var(--green);margin:20px 0;padding:2px 20px;background:var(--soft)}.footer{border-top:1px solid var(--line);padding-top:24px;margin-top:40px;font-size:13px;color:var(--muted)}.check{background:var(--soft);padding:12px 16px;border-radius:8px;color:var(--green);margin-bottom:28px}
+    @media(max-width:1000px){.shell{grid-template-columns:240px minmax(0,1fr);gap:16px;padding:18px}main{padding:30px}aside{padding:16px}h1{font-size:28px}}
+    @media(max-width:760px){.shell{display:block;padding:12px}aside{position:static;height:auto;max-height:350px;margin-bottom:16px}main{padding:26px 20px}body{font-size:15px}h1{font-size:26px}h2{font-size:22px}pre{padding:14px}th,td{min-width:120px;padding:10px}}
+    @media print{body{background:white;font-size:11pt}.shell{display:block;padding:0}aside{display:none}main{border:0;box-shadow:none;padding:0}h2{break-before:auto;break-after:avoid}h3{break-after:avoid}pre{white-space:pre-wrap;overflow-wrap:anywhere;break-inside:avoid}table{display:table;width:100%;font-size:9pt}th,td{min-width:0;padding:7px}a{color:inherit}.check{display:none}h1{font-size:24pt}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside aria-label="教程目录">
+      <strong>完整教程目录</strong>
+      <p>点击跳到对应步骤。按编号依次完成；做完看“检查结果”。</p>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#0-先理解整个流程">0. 先理解整个流程</a></li>
+    <li><a href="#1-费用稳定性与这套方案的边界">1. 费用、稳定性与这套方案的边界</a>
+      <ul>
+        <li><a href="#11-从-github-能找到哪些建站工具">1.1 从 GitHub 能找到哪些建站工具</a></li>
+        <li><a href="#12-免费托管方式怎样选">1.2 免费托管方式怎样选</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-记下你的-github-用户名">2. 记下你的 GitHub 用户名</a></li>
+    <li><a href="#3-找到博客文件夹">3. 找到博客文件夹</a></li>
+    <li><a href="#4-用-vs-code-打开整个博客文件夹">4. 用 VS Code 打开整个博客文件夹</a></li>
+    <li><a href="#5-打开终端检查-git-与当前目录">5. 打开终端，检查 Git 与当前目录</a></li>
+    <li><a href="#6-检查-hugo不需要全局安装">6. 检查 Hugo，不需要全局安装</a></li>
+    <li><a href="#7-第一次启动本地博客">7. 第一次启动本地博客</a></li>
+    <li><a href="#8-认识文件结构只改需要的文件">8. 认识文件结构，只改需要的文件</a></li>
+    <li><a href="#9-修改站名作者与网站网址">9. 修改站名、作者与网站网址</a></li>
+    <li><a href="#10-修改关于我">10. 修改“关于我”</a></li>
+    <li><a href="#11-创建第一篇自己的作品介绍">11. 创建第一篇自己的作品介绍</a></li>
+    <li><a href="#12-搞清楚文章头部字段与草稿">12. 搞清楚文章头部字段与草稿</a></li>
+    <li><a href="#13-添加图片链接和代码">13. 添加图片、链接和代码</a>
+      <ul>
+        <li><a href="#131-添加实物图片">13.1 添加实物图片</a></li>
+        <li><a href="#132-给文章加封面">13.2 给文章加封面</a></li>
+        <li><a href="#133-添加源码或演示视频链接">13.3 添加源码或演示视频链接</a></li>
+        <li><a href="#134-添加代码">13.4 添加代码</a></li>
+      </ul>
+    </li>
+    <li><a href="#14-添加其他栏目示例文章已删除">14. 添加其他栏目（示例文章已删除）</a></li>
+    <li><a href="#15-检查正式构建">15. 检查正式构建</a></li>
+    <li><a href="#16-初始化博客自己的-git-仓库">16. 初始化博客自己的 Git 仓库</a></li>
+    <li><a href="#17-设置本仓库的提交署名">17. 设置本仓库的提交署名</a></li>
+    <li><a href="#18-在-vs-code-查看暂存与提交">18. 在 VS Code 查看、暂存与提交</a></li>
+    <li><a href="#19-从-vs-code-发布源码仓库到-github">19. 从 VS Code 发布源码仓库到 GitHub</a></li>
+    <li><a href="#20-配置-github-pages-的发布来源">20. 配置 GitHub Pages 的发布来源</a></li>
+    <li><a href="#21-运行首次部署并查看结果">21. 运行首次部署并查看结果</a></li>
+    <li><a href="#22-首次上线后的检查清单">22. 首次上线后的检查清单</a></li>
+    <li><a href="#23-以后每次更新文章的固定流程">23. 以后每次更新文章的固定流程</a></li>
+    <li><a href="#24-修改或删除已经发布的文章">24. 修改或删除已经发布的文章</a></li>
+    <li><a href="#25-备份源码">25. 备份源码</a>
+      <ul>
+        <li><a href="#251-教程与打包能力一起在包里">25.1 教程与打包能力一起在包里</a></li>
+      </ul>
+    </li>
+    <li><a href="#26-换电脑或恢复博客">26. 换电脑或恢复博客</a></li>
+    <li><a href="#27-长期维护与将来迁移">27. 长期维护与将来迁移</a></li>
+    <li><a href="#271-想显示最后更新时怎么做">27.1 想显示“最后更新”时怎么做</a></li>
+    <li><a href="#28-常见问题按现象定位">28. 常见问题：按现象定位</a></li>
+    <li><a href="#附录-a如果自己的博客仓库已经存在">附录 A：如果自己的博客仓库已经存在</a></li>
+    <li><a href="#附录-b如果想自己从空目录搭建">附录 B：如果想自己从空目录搭建</a></li>
+    <li><a href="#附录-c查资料时优先使用这些官方链接">附录 C：查资料时优先使用这些官方链接</a></li>
+    <li><a href="#完成记录">完成记录</a></li>
+  </ul>
+</nav>
+    </aside>
+    <main>
+      <div class="check">离线阅读版 · Windows / VS Code / Git · 可用浏览器 Ctrl+P 打印或保存为 PDF</div>
+      <h1 id="从零搭建个人博客windows--vs-code-完整操作指南">从零搭建个人博客：Windows + VS Code 完整操作指南</h1>
+<p>整理日期：2026 年 10 月 5 日（2026 年 10 月 5 日按新版配置更新）。适用目标：展示嵌入式作品、发布开源方案、写技术笔记、分享工具和资源。</p>
+<p>本教程统一采用 <strong>Hugo + PaperMod + GitHub Pages</strong>。在 Windows 电脑上用 VS Code 编辑，通过 VS Code 的 Git 界面提交、上传，由 GitHub 自动生成并发布网页。</p>
+<p>你已有 GitHub 账号，电脑上也已有 VS Code 和 Git。本教程仍写出环境检查方法，方便你以后换电脑时重新操作。</p>
+<p>你的博客源码放在 <code>D:\本地博客</code>，教程放在 <code>D:\本地博客\docs</code>。这个目录也是从原基础包复制来的保留副本：<code>C:\Users\42891\Documents\Codex\2026-10-05\n-n\outputs\my-blog</code>（未改动，作为最初版本保存）。</p>
+<p>博客已按你的账号配置好站名、作者和网址，站名是“一只无辜的银”。原来附带的四篇 <code>example-*</code> 示例文章<strong>已经删除</strong>（删除前的文件保留在 <code>.backups\removed-examples-20261005.zip</code>），四个栏目现在都是空的，只保留各自的 <code>_index.md</code>。<strong>目前只是本地文件，尚未创建你的 GitHub 仓库，也未公开发布。</strong></p>
+<p>先完成本地阶段，确认内容和样式，再完成上线阶段。每完成一步，都看一下本步的“检查结果”，符合之后再继续。</p>
+<p>本次交付依然是三个文件：本教程的 <code>.md</code> 原文、可双击用浏览器阅读的 <code>.html</code> 离线版，以及新版 <code>个人博客完整教程与基础包-已配置-yintaoc3-collab.zip</code>。ZIP 中包含 <code>my-blog/</code>（已配置好的博客源码）、<code>docs/</code>（两种教程、教程渲染脚本与新打包脚本，可随时重新生成）以及便携 Hugo。先全部解压，再打开博客目录；若你直接使用 <code>D:\本地博客</code> 这份现成文件夹，就无需再次解压。</p>
+<p><strong>怎样阅读：</strong> 第 0～15 步完成本地修改与验证，第 16～22 步完成 GitHub 上线，第 23～28 步用于日常更新与长期维护。附录是遇到特殊情况时使用的补充说明。命令只复制代码框内的内容，不要把解释文字或终端中的 <code>PS C:\...&gt;</code> 提示符也复制进去。每条命令运行完再输入下一条；占位文字必须先换成自己的信息。</p>
+<h2 id="0-先理解整个流程">0. 先理解整个流程</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>你在 VS Code 写 Markdown 文章和放图片
+</span></span><span style="display:flex;"><span>                ↓
+</span></span><span style="display:flex;"><span>Hugo 在本地生成网页，浏览器预览
+</span></span><span style="display:flex;"><span>                ↓
+</span></span><span style="display:flex;"><span>Git 给本次修改留下记录：Commit
+</span></span><span style="display:flex;"><span>                ↓
+</span></span><span style="display:flex;"><span>把记录上传到 GitHub：Push
+</span></span><span style="display:flex;"><span>                ↓
+</span></span><span style="display:flex;"><span>GitHub Actions 自动运行 Hugo
+</span></span><span style="display:flex;"><span>                ↓
+</span></span><span style="display:flex;"><span>GitHub Pages 对外提供网站
+</span></span><span style="display:flex;"><span>                ↓
+</span></span><span style="display:flex;"><span>别人访问 https://你的用户名.github.io/
+</span></span></code></pre></div><table>
+	<thead>
+			<tr>
+					<th>名称</th>
+					<th>你可以怎样理解</th>
+					<th>本教程中的作用</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>VS Code</td>
+					<td>编辑文件的工具</td>
+					<td>写文章、修改配置、使用 Git 界面</td>
+			</tr>
+			<tr>
+					<td>Markdown</td>
+					<td>用普通文字加少量符号表示排版</td>
+					<td>写标题、正文、图片、链接、代码</td>
+			</tr>
+			<tr>
+					<td>Hugo</td>
+					<td>把文字和主题生成网页的工具</td>
+					<td>本地预览、正式构建</td>
+			</tr>
+			<tr>
+					<td>PaperMod</td>
+					<td>博客外观与页面功能的主题</td>
+					<td>提供文章页、菜单、目录、搜索等</td>
+			</tr>
+			<tr>
+					<td>Git</td>
+					<td>给文件变化保存历史的工具</td>
+					<td>留下可检查的修改记录</td>
+			</tr>
+			<tr>
+					<td>GitHub</td>
+					<td>存放 Git 仓库的平台</td>
+					<td>保存源码、执行自动部署</td>
+			</tr>
+			<tr>
+					<td>GitHub Actions</td>
+					<td>服务器上的自动执行流程</td>
+					<td>自动构建网页并发布</td>
+			</tr>
+			<tr>
+					<td>GitHub Pages</td>
+					<td>提供静态网页访问的服务</td>
+					<td>让别人通过网址访问博客</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>保存、提交、上传、上线是四件不同的事。</strong> 按 <code>Ctrl+S</code> 只是保存电脑上的文件；Commit 是保存本地历史；Push 才把历史上传；Actions 成功后网站才更新。</p>
+<h2 id="1-费用稳定性与这套方案的边界">1. 费用、稳定性与这套方案的边界</h2>
+<p><strong>目的：</strong> 搭建之前先弄清楚免费包括什么，以及长期使用应保留什么。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>使用 GitHub Free 账号。</li>
+<li>将博客源码仓库设为 Public，也就是公开仓库。</li>
+<li>使用 GitHub 提供的 <code>你的用户名.github.io</code> 网址。</li>
+<li>本地保留源码，再额外保留一份备份。</li>
+<li>固定 Hugo 和主题版本，更新前先测试。</li>
+</ol>
+<p>按目前官方政策，GitHub Pages 可在 GitHub Free 的公开仓库中使用；发布后的网站最大 1 GB，月流量软限制为 100 GB。免费平台政策可能改变，也不能保证一直无故障。因此，这里的“长期使用”依靠少依赖、保留源码与方便迁移，而不是承诺永久免费或永不宕机。</p>
+<p>这套方案适合静态博客、作品说明和开源文档。第一版采用文件更新；登录后台、数据库、用户注册和在线交易等功能需要另行设计。</p>
+<p>独立域名是后续可选项，需要购买并续费。使用默认网址就能先完成免费上线。</p>
+<p><strong>检查结果：</strong> 你接受源码公开，第一版使用默认网址和文件更新。</p>
+<p>参考：<a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits">GitHub Pages 条件与限制</a>、<a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">GitHub Pages 网址说明</a>。</p>
+<h3 id="11-从-github-能找到哪些建站工具">1.1 从 GitHub 能找到哪些建站工具</h3>
+<p>“建站工具”和“托管平台”是两回事：前者把内容生成网页，后者让网页被别人访问。下面的工具都可以生成静态站点，再搭配静态托管服务。</p>
+<table>
+	<thead>
+			<tr>
+					<th>工具与项目链接</th>
+					<th>本地使用方式</th>
+					<th>对你的适用情况</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><a href="https://github.com/gohugoio/hugo">Hugo</a> + <a href="https://github.com/adityatelange/hugo-PaperMod">PaperMod</a></td>
+					<td>Hugo 可执行文件、Markdown、主题配置</td>
+					<td>本教程采用；在这个基础版本中无需安装 Node.js、npm 或 Ruby，方便保留工具与源码</td>
+			</tr>
+			<tr>
+					<td><a href="https://github.com/withastro/astro">Astro</a></td>
+					<td>JavaScript/TypeScript 项目，安装项目依赖并构建</td>
+					<td>适合希望进一步定制作品页面、交互和布局的人；以后可按需求评估</td>
+			</tr>
+			<tr>
+					<td><a href="https://github.com/hexojs/hexo">Hexo</a></td>
+					<td>Node.js 博客框架，Markdown 文章与主题</td>
+					<td>可用于传统博客；需要维护 Node.js 与相关项目依赖</td>
+			</tr>
+			<tr>
+					<td><a href="https://github.com/jekyll/jekyll">Jekyll</a></td>
+					<td>Ruby 静态博客工具，Markdown 与模板</td>
+					<td>也是可用方案；在 Windows 本地准备 Ruby 环境是额外步骤</td>
+			</tr>
+	</tbody>
+</table>
+<p>这里选 Hugo 是结合你希望长期保留内容、在电脑上编辑、减少环境配置的判断，不意味着其他工具不能长期使用。固定版本、备份和能恢复的源码，比某个主题当前是否流行更有帮助。</p>
+<h3 id="12-免费托管方式怎样选">1.2 免费托管方式怎样选</h3>
+<table>
+	<thead>
+			<tr>
+					<th>托管方式</th>
+					<th>免费使用条件与限制</th>
+					<th>这份教程的安排</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits">GitHub Pages</a></td>
+					<td>GitHub Free 的公开仓库可用；发布网站最大 1 GB，月流量软限制 100 GB</td>
+					<td>主方案；源码、修改历史与自动部署集中在你已有的 GitHub 账号</td>
+			</tr>
+			<tr>
+					<td><a href="https://developers.cloudflare.com/pages/platform/limits/">Cloudflare Pages</a></td>
+					<td>当前 Free 计划每月 500 次构建，最多 20,000 个文件，单个文件最大 25 MiB</td>
+					<td>可作为将来迁移的另一种选择；需要另有 Cloudflare 账号并配置项目</td>
+			</tr>
+			<tr>
+					<td>仅本机 Hugo 预览</td>
+					<td>不产生托管费用；只能用于本地编辑与查看</td>
+					<td>第 0～15 步就能完成，但尚未得到公开网站</td>
+			</tr>
+	</tbody>
+</table>
+<p>Cloudflare 的 <a href="https://developers.cloudflare.com/pages/framework-guides/deploy-a-hugo-site/">Hugo 官方部署说明</a> 可在迁移时使用。本教程先完整走通 GitHub Pages，避免第一次搭建时同时操作多个平台。上述免费限制按整理日期核对，实际使用时仍以官网为准。</p>
+<h2 id="2-记下你的-github-用户名">2. 记下你的 GitHub 用户名</h2>
+<p><strong>目的：</strong> 正确设置网站网址和仓库名称。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>打开 <a href="https://github.com/">GitHub</a>，登录自己的账号。</li>
+<li>点击头像，进入个人主页 <code>Your profile</code>。</li>
+<li>查看浏览器地址。例如主页是 <code>https://github.com/zhangsan</code>，用户名就是 <code>zhangsan</code>。用户名只允许英文字母、数字和连字符。</li>
+<li>记下用户名。它与个人主页上可以填写中文的显示名称不一定相同。</li>
+</ol>
+<p>教程示例统一使用 <code>zhangsan</code> 这个名字，仅用于演示；你自己的用户名在设置时替换即可：</p>
+<table>
+	<thead>
+			<tr>
+					<th>项目</th>
+					<th>应填写的值</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>用户名</td>
+					<td><code>yintaoc3-collab</code></td>
+			</tr>
+			<tr>
+					<td>仓库名</td>
+					<td><code>yintaoc3-collab.github.io</code></td>
+			</tr>
+			<tr>
+					<td>网站地址</td>
+					<td><code>https://yintaoc3-collab.github.io/</code></td>
+			</tr>
+	</tbody>
+</table>
+<p>本教程已按用户名 <code>yintaoc3-collab</code> 配置完成：仓库名 <code>yintaoc3-collab.github.io</code>，网站地址 <code>https://yintaoc3-collab.github.io/</code>。上面的对照表用于说明用户名与仓库名的关系。</p>
+<p>如果 <code>你的用户名.github.io</code> 仓库已存在，先查看里面是什么，不要新建同名仓库或覆盖原网站。可在另一份本地副本中准备新博客，再评估怎样接入已有仓库。</p>
+<p><strong>检查结果：</strong> 你知道自己的公开主页网址、用户名和计划使用的仓库名。</p>
+<h2 id="3-找到博客文件夹">3. 找到博客文件夹</h2>
+<p><strong>目的：</strong> 后面的操作始终针对同一份博客源码，避免在不同文件夹里修改不同副本。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>打开 Windows 文件资源管理器。</li>
+<li>在地址栏粘贴：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>C:\Users\42891\Documents\Codex\2026-10-05\n-n\outputs\my-blog
+</span></span></code></pre></div><ol start="3">
+<li>按回车。</li>
+<li>确认里面有 <code>hugo.yaml</code>、<code>content</code>、<code>themes</code>、<code>scripts</code>、<code>start-blog.cmd</code>。</li>
+<li>如果你拿到的是 ZIP，先右键“全部解压”，再进入解压后的 <code>my-blog</code> 文件夹。不要在压缩包预览里直接编辑或运行。</li>
+</ol>
+<p>可以把整个 <code>my-blog</code> 文件夹复制到自己习惯的位置。移动后，下文给出的完整路径需要换成你实际的位置；目录内的相对结构保持不变。</p>
+<p><strong>检查结果：</strong> 你在真实文件夹中看见 <code>hugo.yaml</code>，而不是只看见外层 ZIP。</p>
+<h2 id="4-用-vs-code-打开整个博客文件夹">4. 用 VS Code 打开整个博客文件夹</h2>
+<p><strong>目的：</strong> 让 VS Code 同时识别文章、配置、终端与 Git 仓库。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>启动 VS Code。</li>
+<li>选择“文件 → 打开文件夹”，英文界面是 <code>File → Open Folder</code>。</li>
+<li>选择上一步的 <code>my-blog</code> 文件夹。</li>
+<li>左侧资源管理器应列出全部博客文件。</li>
+<li>如果出现工作区信任提示，确认你正在打开本教程附带的博客目录，再按自己的判断选择信任。</li>
+</ol>
+<p>不要只双击一个 <code>index.md</code> 后就开始后面的 Git 操作。需要打开文件夹，才能把博客作为一个完整项目管理。</p>
+<p><strong>检查结果：</strong> VS Code 左侧同时有 <code>hugo.yaml</code>、<code>content</code>、<code>themes</code> 和 <code>scripts</code>。</p>
+<p>需要重新安装时：<a href="https://code.visualstudio.com/Download">VS Code 下载</a>、<a href="https://code.visualstudio.com/docs/setup/windows">Windows 安装说明</a>。</p>
+<h2 id="5-打开终端检查-git-与当前目录">5. 打开终端，检查 Git 与当前目录</h2>
+<p><strong>目的：</strong> 确认工具可用，也确认命令不会作用到其他工程。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>在 VS Code 选择“终端 → 新建终端”，英文是 <code>Terminal → New Terminal</code>。</li>
+<li>在底部的终端中，一条一条输入下面的命令；每条输入后按回车：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#6639ba">Get-Location</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#6639ba">Test-Path</span> <span style="color:#1f2328">.\</span>hugo<span style="color:#1f2328">.</span>yaml
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git <span style="color:#1f2328">-</span>-version
+</span></span></code></pre></div><ol start="3">
+<li>第一条显示当前目录；应是你的 <code>my-blog</code> 目录。</li>
+<li>第二条应显示 <code>True</code>，说明当前目录有博客配置文件。</li>
+<li>第三条应显示 Git 版本。</li>
+</ol>
+<p>你这台电脑已检查到 Git <code>2.54.0.windows.1</code>。VS Code 提供 Git 的界面，实际仍调用已安装的 Git 程序；基本上传功能不需要另装 GitHub 扩展。</p>
+<p>如果目录不对，执行：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#6639ba">Set-Location</span> -LiteralPath <span style="color:#0a3069">&#39;C:\Users\42891\Documents\Codex\2026-10-05\n-n\outputs\my-blog&#39;</span>
+</span></span></code></pre></div><p><strong>检查结果：</strong> <code>Test-Path</code> 返回 <code>True</code>，<code>git --version</code> 返回版本号。</p>
+<p>参考：<a href="https://code.visualstudio.com/docs/sourcecontrol/github">VS Code 的 Git 与 GitHub 支持</a>、<a href="https://git-scm.com/downloads/win">Git for Windows</a>。</p>
+<h2 id="6-检查-hugo不需要全局安装">6. 检查 Hugo，不需要全局安装</h2>
+<p><strong>目的：</strong> 让本地与 GitHub 使用相同的构建工具版本。</p>
+<p>本教程附带的博客已放入 Hugo <code>0.167.0</code>，位置是 <code>.tools/hugo/hugo.exe</code>。Hugo 没有加入系统 PATH，所以直接输入 <code>hugo</code> 可能无法识别，这是正常的；本教程使用明确的相对路径。</p>
+<p><strong>做法：</strong></p>
+<p>在博客目录的终端执行：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe version
+</span></span></code></pre></div><p>应出现以 <code>hugo v0.167.0</code> 开头的版本信息。</p>
+<p>如果 <code>.tools</code> 不存在，例如你以后从 GitHub 重新克隆了源码，双击 <code>start-blog.cmd</code> 即可由附带脚本下载固定版本并校验文件。首次下载需要网络。</p>
+<p>手动恢复的做法：</p>
+<ol>
+<li>打开 <a href="https://github.com/gohugoio/hugo/releases/tag/v0.167.0">Hugo 0.167.0 官方发布页</a>。</li>
+<li>下载 <code>hugo_0.167.0_windows-amd64.zip</code>。这对应本教程已经检查过的 Windows x64 电脑。</li>
+<li>解压到博客目录中的 <code>.tools/hugo/</code>，使该目录下直接有 <code>hugo.exe</code>。</li>
+<li>再执行上面的版本命令。</li>
+</ol>
+<p>归档的 SHA-256 校验值记录在博客的 <code>VERSIONS.md</code> 中。若要核对下载的 ZIP，可执行：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#6639ba">Get-FileHash</span> -Algorithm SHA256 -LiteralPath <span style="color:#0a3069">&#39;你下载的Hugo压缩包完整路径&#39;</span>
+</span></span></code></pre></div><p>替换路径后再执行；只比较对应 ZIP 的校验值，不能拿 ZIP 的校验值去比较解压后的 EXE。</p>
+<p><strong>检查结果：</strong> 显示 Hugo <code>0.167.0</code>。</p>
+<p>参考：<a href="https://gohugo.io/installation/windows/">Hugo Windows 安装说明</a>。</p>
+<h2 id="7-第一次启动本地博客">7. 第一次启动本地博客</h2>
+<p><strong>目的：</strong> 先在自己电脑上确认博客能运行。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>如果此前预览窗口还在运行，直接使用那个预览，不要再启动第二份。</li>
+<li>在文件资源管理器中双击 <code>start-blog.cmd</code>。</li>
+<li>或在 VS Code 的博客终端执行：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\</span><span style="color:#6639ba">start-blog</span><span style="color:#1f2328">.</span>cmd
+</span></span></code></pre></div><ol start="4">
+<li>等窗口显示 <code>Web Server is available</code>。</li>
+<li>在浏览器打开 <a href="http://127.0.0.1:1313/">本地预览</a>。</li>
+<li>保持运行窗口打开。需要停止时，在该窗口按 <code>Ctrl+C</code>。</li>
+</ol>
+<p><code>127.0.0.1</code> 代表这台电脑本身。这个预览只绑定本机，其他人不能拿这个地址访问你的博客；公开地址要在后面的上线步骤获得。</p>
+<p>运行时你可以保存文章，浏览器通常会自动刷新。若未刷新，手动按一下浏览器刷新按钮。</p>
+<p><strong>检查结果：</strong> 浏览器显示“一只无辜的银”首页，能进入各栏目。</p>
+<h2 id="8-认识文件结构只改需要的文件">8. 认识文件结构，只改需要的文件</h2>
+<p><strong>目的：</strong> 以后能准确找到站名、文章、图片和部署配置。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>my-blog/
+</span></span><span style="display:flex;"><span>├─ hugo.yaml                       网站基本配置
+</span></span><span style="display:flex;"><span>├─ content/
+</span></span><span style="display:flex;"><span>│  ├─ projects/                    嵌入式作品
+</span></span><span style="display:flex;"><span>│  ├─ opensource/                  开源方案
+</span></span><span style="display:flex;"><span>│  ├─ notes/                       技术笔记
+</span></span><span style="display:flex;"><span>│  ├─ goodies/                     好物分享
+</span></span><span style="display:flex;"><span>│  ├─ about.md                     关于我
+</span></span><span style="display:flex;"><span>│  └─ search.md                    搜索页面
+</span></span><span style="display:flex;"><span>├─ themes/PaperMod/                已保留在本地的主题
+</span></span><span style="display:flex;"><span>├─ layouts/                       本站模板覆盖
+</span></span><span style="display:flex;"><span>├─ assets/css/extended/            本站附加样式
+</span></span><span style="display:flex;"><span>├─ static/                        网站公共资源
+</span></span><span style="display:flex;"><span>├─ scripts/                       启动、构建和备份脚本
+</span></span><span style="display:flex;"><span>├─ .github/workflows/hugo.yaml      GitHub 自动部署配置
+</span></span><span style="display:flex;"><span>├─ .tools/hugo/                    本机的 Hugo 工具
+</span></span><span style="display:flex;"><span>├─ public/                        自动生成的网页
+</span></span><span style="display:flex;"><span>├─ start-blog.cmd                  启动本地预览
+</span></span><span style="display:flex;"><span>├─ build-blog.cmd                  检查正式构建
+</span></span><span style="display:flex;"><span>└─ backup-blog.cmd                 备份源码
+</span></span></code></pre></div><p>日常主要修改 <code>content/</code> 和 <code>hugo.yaml</code>。<code>public/</code> 是生成结果，下次构建会重新生成；直接改里面的 HTML，修改不会可靠地保留下来。</p>
+<p>主题已经放在项目里，首次构建不必联网拉取 PaperMod。原作者许可证保留在 <code>themes/PaperMod/LICENSE</code>。</p>
+<p><strong>检查结果：</strong> 你知道正文放在哪里，也知道不要把生成目录当正文目录。</p>
+<h2 id="9-修改站名作者与网站网址">9. 修改站名、作者与网站网址</h2>
+<p><strong>目的：</strong> 把通用基础版本改成自己的博客。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>在 VS Code 左侧点击 <code>hugo.yaml</code>。</li>
+<li>修改以下对应值，保留字段名称：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">baseURL</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;https://yintaoc3-collab.github.io/&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">title</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;一只无辜的银&#34;</span><span style="color:#fff">
+</span></span></span></code></pre></div><ol start="3">
+<li>确认 <code>baseURL</code> 中的用户名是你的真实 GitHub 用户名。</li>
+<li>在 <code>params:</code> 下找到作者、简介和标识文本。例如：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">params</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">author</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;一只无辜的银&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">description</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;记录嵌入式作品、分享开源方案、整理技术笔记与实用资源。&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">label</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">text</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;一只无辜的银&#34;</span><span style="color:#fff">
+</span></span></span></code></pre></div><ol start="5">
+<li>修改现有位置的值；不要把上面片段整段追加到文件末尾，也不要重复创建第二个 <code>params:</code>。</li>
+<li>需要改首页介绍时，修改现有 <code>homeInfoParams</code> 的 <code>Title</code> 和 <code>Content</code>。</li>
+<li>按 <code>Ctrl+S</code> 保存，查看本地预览。</li>
+</ol>
+<p>YAML 用缩进表示所属关系。用空格保留原来的对齐，不要随意把子项挪到行首。文字使用普通英文双引号 <code>&quot;</code>，不要把它替换成中文弯引号。</p>
+<p><strong>检查结果：</strong> 首页显示自己的站名和介绍；配置中的站名、作者与网址都是你自己的信息。</p>
+<h2 id="10-修改关于我">10. 修改“关于我”</h2>
+<p><strong>目的：</strong> 让访问者知道你做什么，以及在哪里找到你的项目。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>打开 <code>content/about.md</code>。</li>
+<li>保留文件最前面的两条 <code>---</code> 与中间的配置。</li>
+<li>在第二条 <code>---</code> 后面修改正文。</li>
+<li>可以填写技术方向、常用平台、博客用途和公开 GitHub 主页。</li>
+<li>插入主页链接的写法：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>[<span style="color:#0550ae">我的 GitHub</span>](<span style="color:#1f2328">https://github.com/yintaoc3-collab</span>)
+</span></span></code></pre></div><ol start="6">
+<li>确认链接指向自己的公开主页后保存。</li>
+</ol>
+<p>无需在博客源码里放账号密码或访问令牌。公开仓库里的源码，包括草稿文件，都会被别人看见；公开联系方式应由你自己选择。</p>
+<p><strong>检查结果：</strong> 菜单中的“关于我”显示真实介绍，链接能打开你的公开主页。</p>
+<h2 id="11-创建第一篇自己的作品介绍">11. 创建第一篇自己的作品介绍</h2>
+<p><strong>目的：</strong> 学会创建文章，并把文章与图片放在一起。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>在 VS Code 左侧找到 <code>content/projects/</code>。</li>
+<li>在里面新建文件夹，例如 <code>my-first-project</code>。</li>
+<li>在这个文件夹中创建文件 <code>index.md</code>。</li>
+<li>复制下面的结构，替换成真实内容：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#24292e">---</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">title</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;我的第一个嵌入式作品&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">date</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>2026-10-05T10:00:00<span style="color:#0550ae">+08</span><span style="color:#1f2328">:</span><span style="color:#0550ae">00</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">draft</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#cf222e">true</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">description</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;用一两句话介绍作品用途。&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">summary</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;这段文字会出现在文章列表中。&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">tags</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;STM32&#34;</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;项目记录&#34;</span><span style="color:#1f2328">]</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">categories</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;嵌入式作品&#34;</span><span style="color:#1f2328">]</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#24292e">---</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 作品解决什么问题
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>介绍使用场景、主要功能与设计目标。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 实物与演示
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>放自己的图片或视频链接。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 硬件组成
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>写明主控、模块、接口和供电方式。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 软件结构
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>说明工具链、主要模块和关键逻辑。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0a3069">```c
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">int</span> <span style="color:#6639ba">main</span><span style="color:#1f2328">(</span><span style="color:#cf222e">void</span><span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6639ba">board_init</span><span style="color:#1f2328">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">for</span> <span style="color:#1f2328">(;;)</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6639ba">app_update</span><span style="color:#1f2328">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#0a3069">```</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 复现步骤
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">1.</span> 准备硬件。
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">2.</span> 连接模块。
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">3.</span> 下载工程。
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">4.</span> 编译和烧录。
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">5.</span> 检查运行效果。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 源码与附件
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#0550ae">源码仓库</span>](<span style="color:#1f2328">https://github.com/yintaoc3-collab/YOUR_REPOSITORY</span>)
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">&gt; </span><span style="color:#1f2328">这里的 `YOUR_REPOSITORY` 是你将来实际发布项目的仓库名，不是博客仓库。
+</span></span></span></code></pre></div><p>其中芯片标签只是例子，不符合你的实际项目时要修改。日期改成你实际写作或发布的日期；不要使用未来日期，Hugo 默认不会在正式构建中发布未来文章。</p>
+<p><code>index.md</code> 与项目图片在同一文件夹中，这种组织方式叫页面包，方便整体移动和备份。</p>
+<p><strong>检查结果：</strong> <code>content/projects/my-first-project/index.md</code> 存在，本地预览能看到该草稿。</p>
+<p>参考：<a href="https://gohugo.io/content-management/page-bundles/">Hugo 页面包</a>、<a href="https://gohugo.io/content-management/front-matter/">文章头部字段</a>。</p>
+<h2 id="12-搞清楚文章头部字段与草稿">12. 搞清楚文章头部字段与草稿</h2>
+<p><strong>目的：</strong> 控制文章标题、列表摘要、分类和正式发布状态。</p>
+<table>
+	<thead>
+			<tr>
+					<th>字段</th>
+					<th>用途</th>
+					<th>你怎样填写</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>title</code></td>
+					<td>页面标题</td>
+					<td>写真实文章名称</td>
+			</tr>
+			<tr>
+					<td><code>date</code></td>
+					<td>发布时间、排序依据</td>
+					<td>使用实际日期时间，<code>+08:00</code> 表示北京时间</td>
+			</tr>
+			<tr>
+					<td><code>draft</code></td>
+					<td>是否是草稿</td>
+					<td>未写完用 <code>true</code>，准备上线用 <code>false</code></td>
+			</tr>
+			<tr>
+					<td><code>description</code></td>
+					<td>页面简介</td>
+					<td>简短说明内容</td>
+			</tr>
+			<tr>
+					<td><code>summary</code></td>
+					<td>列表中的摘要</td>
+					<td>两三句话介绍文章</td>
+			</tr>
+			<tr>
+					<td><code>tags</code></td>
+					<td>关键词</td>
+					<td>例如 STM32、ESP32、OLED、调试</td>
+			</tr>
+			<tr>
+					<td><code>categories</code></td>
+					<td>内容分类</td>
+					<td>例如嵌入式作品、开源方案</td>
+			</tr>
+	</tbody>
+</table>
+<p>本地启动器使用 <code>--buildDrafts</code>，因此草稿也能预览；正式构建和 GitHub 自动部署不会使用该参数，<code>draft: true</code> 的文章不会生成网页。</p>
+<p><strong>草稿不生成网页，不等于草稿源码保密。</strong> 如果你把草稿文件提交到公开 GitHub 仓库，别人仍能阅读那个文件。真正不准备公开的内容应保留在仓库外。</p>
+<p><strong>做法：</strong> 先用 <code>draft: true</code> 写作，确认内容后改为 <code>draft: false</code>，再保存、构建、提交、上传。</p>
+<p><strong>检查结果：</strong> 你清楚本地能看见草稿，而正式网页是否包含文章由草稿状态决定。</p>
+<h2 id="13-添加图片链接和代码">13. 添加图片、链接和代码</h2>
+<p><strong>目的：</strong> 让嵌入式项目页面有实物效果和可复现信息。</p>
+<h3 id="131-添加实物图片">13.1 添加实物图片</h3>
+<ol>
+<li>把自己的照片复制到文章同一个目录。</li>
+<li>文件名建议采用英文小写，例如 <code>board-front.jpg</code>。</li>
+<li>在正文中写：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>![<span style="color:#0550ae">开发板正面实物</span>](<span style="color:#1f2328">board-front.jpg</span>)
+</span></span></code></pre></div><ol start="4">
+<li>保存，在浏览器检查图片。</li>
+</ol>
+<p><code>![...]</code> 里面是图片描述，括号内是相对路径。不要写成 <code>C:\Users\...</code> 这样的本机路径，因为别人访问网站时没有你电脑上的那个文件。</p>
+<h3 id="132-给文章加封面">13.2 给文章加封面</h3>
+<p>在文章头部添加以下字段，缩进保持两格：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">cover</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">image</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;board-front.jpg&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">alt</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;开发板正面实物&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">caption</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;我的项目照片&#34;</span><span style="color:#fff">
+</span></span></span></code></pre></div><h3 id="133-添加源码或演示视频链接">13.3 添加源码或演示视频链接</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>[<span style="color:#0550ae">查看源码</span>](<span style="color:#1f2328">https://github.com/yintaoc3-collab/YOUR_REPOSITORY</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#0550ae">观看演示视频</span>](<span style="color:#1f2328">这里换成实际视频页面网址</span>)
+</span></span></code></pre></div><h3 id="134-添加代码">13.4 添加代码</h3>
+<p>用三条反引号围住代码；第一行可以写语言名称，例如 <code>c</code>、<code>cpp</code>、<code>python</code>。</p>
+<p>大视频和大型工程下载包建议放到视频平台或项目发布页，再在博客放链接。博客主要保留文字和经过整理的图片，方便控制体积。</p>
+<p><strong>检查结果：</strong> 图片正常显示，链接指向真实网址，代码块格式正常。</p>
+<h2 id="14-添加其他栏目示例文章已删除">14. 添加其他栏目（示例文章已删除）</h2>
+<p><strong>目的：</strong> 正确归类内容，同时确认示例模板不会当作真实作品公开。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>嵌入式作品放 <code>content/projects/</code>。</li>
+<li>开源方案放 <code>content/opensource/</code>。</li>
+<li>技术笔记放 <code>content/notes/</code>。</li>
+<li>工具、资源和好物放 <code>content/goodies/</code>。</li>
+<li>每篇仍采用“一个英文文件夹 + 一个 <code>index.md</code> + 本文图片”的结构。</li>
+<li>确认目录里已经没有 <code>example-*</code> 文件夹。</li>
+</ol>
+<p>原来附带的四篇示例已经删除，删除前的原文保留在 <code>.backups\removed-examples-20261005.zip</code>，需要参考写法时可以打开查看。如果<strong>你的目录里还看得到 <code>example-*</code></strong>，说明你用的是旧版本基础包，请对照上面的包名换用新版，或把那几篇删掉。</p>
+<p>四个栏目现在没有文章是正常的：栏目页仍会显示，只是列表为空。写进第一篇真实文章后，栏目内容就会自动出现。</p>
+<p>开源方案建议额外写明：支持的平台、依赖版本、安装步骤、已验证环境、源码链接和许可证。将仓库设为公开，只表示可以访问；你希望别人怎样使用代码，需要通过许可证表达。</p>
+<p><strong>检查结果：</strong> 每篇进入正确栏目；计划正式发布的内容真实、完整。</p>
+<h2 id="15-检查正式构建">15. 检查正式构建</h2>
+<p><strong>目的：</strong> 在上传前发现配置和文章格式问题。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>保存所有文件：<code>Ctrl+K</code> 后按 <code>S</code>，或用菜单“文件 → 全部保存”。</li>
+<li>打开博客目录里的 <code>build-blog.cmd</code>，或在 VS Code 新终端执行：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\</span><span style="color:#6639ba">build-blog</span><span style="color:#1f2328">.</span>cmd
+</span></span></code></pre></div><ol start="3">
+<li>等待显示 <code>Build succeeded</code>。</li>
+<li>检查是否有红色 <code>ERROR</code>；如果有，先修复报错。</li>
+<li><code>public/</code> 内会生成 HTML、样式文件和其他网页资源。</li>
+</ol>
+<p><strong>删除或改名文章之后</strong>，正式构建要额外清掉旧输出，否则 <code>public/</code> 里会残留已经删掉的文章网页：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe <span style="color:#1f2328">-</span>-gc <span style="color:#1f2328">-</span>-minify <span style="color:#1f2328">-</span>-cleanDestinationDir
+</span></span></code></pre></div><p><code>--cleanDestinationDir</code> 只清理生成目录，务必让它只作用在 <code>public/</code>（或专门的输出目录）上，不要指向博客根目录或 <code>docs</code>。</p>
+<p>如果你想查看与正式发布一致、排除草稿的本地版本，先停止当前预览，再在终端执行：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe server <span style="color:#1f2328">-</span>-bind <span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span>1 <span style="color:#1f2328">-</span>-port <span style="color:#0550ae">1313</span> <span style="color:#1f2328">-</span>-baseURL http<span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#1f2328">//</span><span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span><span style="color:#0550ae">1</span><span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#0550ae">1313</span><span style="color:#1f2328">/</span>
+</span></span></code></pre></div><p>它没有 <code>--buildDrafts</code>，只显示正式文章。检查完后 <code>Ctrl+C</code> 停止，继续写作时可再用 <code>start-blog.cmd</code>。</p>
+<p><strong>检查结果：</strong> 构建成功，标题、菜单、文章、图片和链接都符合预期。</p>
+<h2 id="16-初始化博客自己的-git-仓库">16. 初始化博客自己的 Git 仓库</h2>
+<p><strong>目的：</strong> 让博客具备修改历史，并让 VS Code 把它识别成独立项目。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>在 VS Code 的新终端中确认仍处于博客目录：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#6639ba">Test-Path</span> <span style="color:#1f2328">.\</span>hugo<span style="color:#1f2328">.</span>yaml
+</span></span></code></pre></div><ol start="2">
+<li>确认结果是 <code>True</code>。</li>
+<li>首次初始化时执行：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git init -b main
+</span></span></code></pre></div><ol start="4">
+<li>查看结果：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git status
+</span></span></code></pre></div><p><code>git init</code> 建立本地历史目录，<code>-b main</code> 指定初始分支名是 <code>main</code>。附带自动部署只监听 <code>main</code>。</p>
+<p>如果你以前已经在这个博客目录完成初始化，不必重复初始化。用 <code>git status</code> 查看实际分支即可；若当前博客分支叫 <code>master</code>，并且没有已有 <code>main</code> 分支或其他分支协作安排，可用 <code>git branch -m main</code> 改名。</p>
+<p><strong>检查结果：</strong> <code>git status</code> 显示在 <code>main</code> 分支；此时还没有上传任何东西。</p>
+<h2 id="17-设置本仓库的提交署名">17. 设置本仓库的提交署名</h2>
+<p><strong>目的：</strong> 给你的提交标明作者，避免第一次提交时报“无法识别作者”。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>打开 <a href="https://github.com/settings/emails">GitHub 邮箱设置</a>。</li>
+<li>如果希望隐藏私人邮箱，按 GitHub 设置中的提示找到该账号对应的 <code>noreply</code> 提交邮箱。</li>
+<li>回到 VS Code 博客终端，替换引号内的占位文字再执行：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git config <span style="color:#1f2328">-</span>-local user<span style="color:#1f2328">.</span>name <span style="color:#0a3069">&#34;一只无辜的银&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git config <span style="color:#1f2328">-</span>-local user<span style="color:#1f2328">.</span>email <span style="color:#0a3069">&#34;从GitHub邮箱设置复制的提交邮箱&#34;</span>
+</span></span></code></pre></div><ol start="4">
+<li>查看结果：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git config <span style="color:#1f2328">-</span>-local <span style="color:#1f2328">-</span>-get user<span style="color:#1f2328">.</span>name
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git config <span style="color:#1f2328">-</span>-local <span style="color:#1f2328">-</span>-get user<span style="color:#1f2328">.</span>email
+</span></span></code></pre></div><p>这里用 <code>--local</code>，仅设置当前博客仓库，不更改其他工程的 Git 署名。姓名和邮箱用于提交记录，与 GitHub 登录密码无关。</p>
+<p><strong>检查结果：</strong> 显示你选择的提交署名和邮箱，不是教程里的占位文字。</p>
+<p>参考：<a href="https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address">设置提交邮箱</a>。</p>
+<h2 id="18-在-vs-code-查看暂存与提交">18. 在 VS Code 查看、暂存与提交</h2>
+<p><strong>目的：</strong> 为博客第一版建立一个可检查的本地版本。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>按 <code>Ctrl+Shift+G</code>，打开“源代码管理 / Source Control”。</li>
+<li>点击变化列表里的文件，查看它的内容。</li>
+<li>确认需要提交 <code>content/</code>、<code>hugo.yaml</code>、<code>themes/</code>、<code>layouts/</code>、<code>assets/</code>、<code>static/</code>、<code>scripts/</code> 和 <code>.github/</code> 等源码。</li>
+<li><code>.gitignore</code> 已排除 <code>public/</code>、<code>.tools/</code>、<code>.backups/</code> 等生成或本机文件；它们不应出现在待提交列表中。</li>
+<li>点击“更改 / Changes”旁边的 <code>+</code>，暂存所有准备好的源码；也可逐个点击文件旁边的 <code>+</code>。</li>
+<li>在提交消息框中输入 <code>初始化个人博客</code>。</li>
+<li>点击“提交 / Commit”。</li>
+</ol>
+<p>暂存是选择本次要保存的内容，提交是把它存进本地历史。看到变化列表为空，不意味着网站已经上线，只表示当前修改已保存成提交。</p>
+<p><strong>检查结果：</strong> 能在源代码管理图或历史中看到这条提交，待提交列表清空。</p>
+<p>参考：<a href="https://code.visualstudio.com/docs/sourcecontrol/quickstart">VS Code 源代码管理入门</a>。</p>
+<h2 id="19-从-vs-code-发布源码仓库到-github">19. 从 VS Code 发布源码仓库到 GitHub</h2>
+<p><strong>目的：</strong> 把博客源码存到自己的 GitHub 账号中。</p>
+<p><strong>前提：</strong> 第 2 步检查过 <code>你的用户名.github.io</code> 仓库还不存在。若已存在，要接入已有仓库，先用附录说明处理。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>按 <code>Ctrl+Shift+P</code>，打开 VS Code 命令面板。</li>
+<li>输入 <code>Publish to GitHub</code>，选择匹配的命令。</li>
+<li>如果要求登录，按 VS Code 的浏览器登录提示进入自己的 GitHub 账号，然后返回编辑器。</li>
+<li>仓库名称填写 <code>yintaoc3-collab.github.io</code>（格式为 <code>你的用户名.github.io</code>）。</li>
+<li>选择发布为 <strong>Public / 公开仓库</strong>。</li>
+<li>按界面提示完成上传。</li>
+<li>打开自己的仓库网页，检查源码是否出现。</li>
+</ol>
+<p>为了使用 GitHub Free 的 Pages，本教程选择公开仓库。这里公开的是源码；之后还需要配置 Pages 才能得到网站。VS Code 基本 GitHub 登录和 Git 操作是内置的，不需要为这一流程安装 Pull Requests 扩展。</p>
+<p><strong>检查结果：</strong> GitHub 上出现你自己的公开仓库，里面能看到 <code>hugo.yaml</code>、<code>content/</code> 和 <code>.github/workflows/hugo.yaml</code>。</p>
+<p>参考：<a href="https://code.visualstudio.com/docs/sourcecontrol/github">VS Code 使用 GitHub</a>。</p>
+<h2 id="20-配置-github-pages-的发布来源">20. 配置 GitHub Pages 的发布来源</h2>
+<p><strong>目的：</strong> 告诉 GitHub，网站由我们的自动构建流程发布。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>在浏览器打开博客的 GitHub 仓库。</li>
+<li>点击仓库的 <code>Settings</code>，不是账号头像里的全局设置。</li>
+<li>在左边菜单找到 <code>Pages</code>。</li>
+<li>在 <code>Build and deployment</code> 区域找到 <code>Source</code>。</li>
+<li>选择 <code>GitHub Actions</code>。</li>
+</ol>
+<p>本教程附带 <code>.github/workflows/hugo.yaml</code>，里面已写好：读取源码 → 下载并校验 Hugo → 构建网站 → 上传生成网页 → 发布到 Pages。</p>
+<p>不用另建 <code>gh-pages</code> 分支，也不用把 <code>public/</code> 手动拖到 GitHub。我们只提交源码，生成网页由 Actions 处理。</p>
+<p><strong>检查结果：</strong> Pages 的 Source 显示 <code>GitHub Actions</code>。</p>
+<p>参考：<a href="https://gohugo.io/host-and-deploy/host-on-github-pages/">Hugo 官方 GitHub Pages 教程</a>。</p>
+<h2 id="21-运行首次部署并查看结果">21. 运行首次部署并查看结果</h2>
+<p><strong>目的：</strong> 得到公开可访问的网址，确认自动部署真的完成。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>在仓库顶部点击 <code>Actions</code>。</li>
+<li>左侧选择 <code>Build and deploy blog</code>。</li>
+<li>第一次上传时可能已经自动触发运行；若当时 Pages 尚未配置，可能会失败。</li>
+<li>配好第 20 步后，点击 <code>Run workflow</code>，选择 <code>main</code>，再确认运行；或对失败运行选择重新运行。</li>
+<li>点进最新运行，查看 <code>build</code> 与 <code>deploy</code> 两个任务。</li>
+<li>看到两个任务都成功后，回到 <code>Settings → Pages</code>，从该页面给出的地址进入网站。</li>
+</ol>
+<p>预期地址是 <code>https://你的用户名.github.io/</code>。以 GitHub Pages 页面实际显示的地址为准。</p>
+<p>这份工作流会用 Pages 给出的真实网址作为构建地址，从而减少用户配置错误造成的链接问题。<code>hugo.yaml</code> 中仍应填写正确 <code>baseURL</code>，用于本地正式构建和日后迁移。</p>
+<p><strong>检查结果：</strong> 自动部署成功，公开网址显示你准备发布的内容。可用手机或另一个浏览器打开确认。</p>
+<p>本地构建成功与 GitHub 在线部署成功是两种验证。准备模板时已验证本地构建；你的在线部署需要上述账号与仓库步骤，不能仅凭本地预览判断已经上线。</p>
+<h2 id="22-首次上线后的检查清单">22. 首次上线后的检查清单</h2>
+<p><strong>目的：</strong> 确认网站对访问者可用。</p>
+<p><strong>本地验收</strong>（构建成功后在 <code>public/</code> 与本地预览上检查）：</p>
+<ul>
+<li>正式构建没有红色 <code>ERROR</code>。</li>
+<li>四篇 <code>example-*</code> 示例页面已消失。</li>
+<li>首页站名、作者、网址都是自己的信息，没有旧站名「嵌入式工坊」和 <code>YOUR_GITHUB_USERNAME</code>。</li>
+<li>搜索索引 <code>index.json</code> 能搜到现有文章。</li>
+<li><code>sitemap.xml</code> 与 <code>robots.txt</code> 里的网址是 <code>https://yintaoc3-collab.github.io/</code>。</li>
+<li>四个空栏目仍保留 <code>_index.md</code>，菜单、搜索、首页在暂时没有文章时也正常显示。</li>
+</ul>
+<p><strong>上线验收</strong>（GitHub Actions 跑完之后检查）：</p>
+<ul>
+<li>首页站名、介绍是否正确。</li>
+<li>五个栏目能否进入。</li>
+<li>正式文章是否出现，草稿是否没有生成网页。</li>
+<li>图片是否显示。</li>
+<li>GitHub 源码链接是否指向你的实际仓库。</li>
+<li>手机窗口下文字、菜单和代码能否阅读。</li>
+<li>公开网址使用 <code>https://</code>。</li>
+<li>公开源码中是否仍有你不准备公开的内容。</li>
+</ul>
+<p>如果 GitHub Pages 设置提供 <code>Enforce HTTPS</code>，确认 HTTPS 已启用；使用 GitHub 提供的默认域名时，按官方服务行为使用 HTTPS。</p>
+<p><strong>检查结果：</strong> 至少从一个独立浏览器成功打开首页与一篇作品页。</p>
+<p>参考：<a href="https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https">GitHub Pages 的 HTTPS</a>。</p>
+<h2 id="23-以后每次更新文章的固定流程">23. 以后每次更新文章的固定流程</h2>
+<p><strong>目的：</strong> 让写作和发布成为可重复的小流程，而不是每次重新搭建。</p>
+<ol>
+<li><strong>打开博客文件夹。</strong> 用 VS Code 打开同一份 <code>my-blog</code>。</li>
+<li><strong>拉取远端修改。</strong> 如果在其他电脑或 GitHub 网页改过内容，先把本地修改提交，再在源代码管理菜单中执行 Pull。</li>
+<li><strong>启动本地预览。</strong> 运行 <code>start-blog.cmd</code>。</li>
+<li><strong>写文章和放图片。</strong> 在正确栏目中创建项目文件夹和 <code>index.md</code>。</li>
+<li><strong>保存。</strong> 按 <code>Ctrl+S</code> 或全部保存。</li>
+<li><strong>检查页面。</strong> 查看标题、正文、图片和代码。</li>
+<li><strong>决定发布状态。</strong> 准备公开的文章设置 <code>draft: false</code>。</li>
+<li><strong>检查正式构建。</strong> 运行 <code>build-blog.cmd</code>。</li>
+<li><strong>暂存与提交。</strong> 在 VS Code 暂存修改，填写 <code>新增：某某项目</code> 或 <code>更新：某某文章</code>，点击 Commit。</li>
+<li><strong>上传。</strong> 在源代码管理的 <code>...</code> 菜单中选择 Push。</li>
+<li><strong>确认部署。</strong> 到 GitHub Actions 查看最新运行是否成功。</li>
+<li><strong>确认网页。</strong> 重新打开公开网址，检查此次内容。</li>
+</ol>
+<p>VS Code 的 <code>Sync Changes / 同步更改</code> 通常先拉取、再推送；<code>Push / 推送</code> 主要上传已有本地提交。刚开始用本教程时可明确选择 Push，操作目的更容易区分。</p>
+<p><strong>检查结果：</strong> 本地提交、GitHub 源码与已发布网页都能对应这次更新。</p>
+<h2 id="24-修改或删除已经发布的文章">24. 修改或删除已经发布的文章</h2>
+<p><strong>目的：</strong> 保持网站内容准确，知道删除或隐藏网页的影响。</p>
+<p><strong>修改文章：</strong> 打开原文章文件 → 修改 → 保存 → 预览 → 构建 → Commit → Push。</p>
+<p><strong>暂时不显示：</strong> 将文章设置为 <code>draft: true</code>，再构建、提交、上传。下一次成功部署后，不再生成该文章网页。但公开源码和 Git 历史仍可能保留文章内容。</p>
+<p><strong>删除文章：</strong> 确认要删除后，在 VS Code 删除对应文章文件夹，再检查源代码管理中的删除列表，提交并上传。旧网址可能失效；如果以前分享过，考虑保留一个说明页或配置跳转。</p>
+<p>文章目录名是网址的一部分。随意把 <code>my-first-project</code> 改成另一个名字，通常也会改变访问地址；改正文和标题一般不会改变按目录生成的地址。</p>
+<p><strong>检查结果：</strong> 在线页面符合你的修改意图，旧链接的处理方式也明确。</p>
+<h2 id="25-备份源码">25. 备份源码</h2>
+<p><strong>目的：</strong> 除了 GitHub，再保留能恢复网站的独立副本。</p>
+<p><strong>做法：</strong></p>
+<ol>
+<li>保存全部文件。</li>
+<li>双击 <code>backup-blog.cmd</code>，或执行：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\</span><span style="color:#6639ba">backup-blog</span><span style="color:#1f2328">.</span>cmd
+</span></span></code></pre></div><ol start="3">
+<li>运行结束后，到博客的 <code>.backups/</code> 文件夹找到 ZIP。</li>
+<li>文件名含时间，方便区分不同备份。</li>
+<li>把它复制到另一块磁盘或你自己使用的备份位置。</li>
+<li>打开 ZIP，检查里面包含 <code>hugo.yaml</code>、<code>content/</code>、<code>themes/</code>、<code>layouts/</code>、<code>scripts/</code>、<code>.github/</code> 和 <code>.gitignore</code>。</li>
+</ol>
+<p>附带脚本备份的是源码，包括尚未提交的已保存文件；不包含 <code>.git</code> 历史、本地 Hugo 程序和生成的 <code>public/</code>。GitHub 上保存已经推送的提交历史。</p>
+<p>需要额外完整备份 Git 历史时，可按官方方法进行镜像克隆：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git clone <span style="color:#1f2328">-</span>-mirror https<span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#1f2328">//</span>github<span style="color:#1f2328">.</span>com<span style="color:#1f2328">/</span><span style="color:#6639ba">yintaoc3-collab</span><span style="color:#1f2328">/</span><span style="color:#6639ba">yintaoc3-collab</span><span style="color:#1f2328">.</span>github<span style="color:#1f2328">.</span>io<span style="color:#1f2328">.</span>git <span style="color:#6639ba">blog-history</span>-backup<span style="color:#1f2328">.</span>git
+</span></span></code></pre></div><p>先把用户名换正确，在专门的备份目录中运行。镜像目录用于保管历史，不作为日常写文章的工作目录；它也不包含尚未提交的文件。</p>
+<h3 id="251-教程与打包能力一起在包里">25.1 教程与打包能力一起在包里</h3>
+<p>基础包内除了博客源码，还带着 <code>docs</code> 文件夹，换电脑或换解压目录后仍能更新教程、重新打包，不依赖任何外部目录：</p>
+<table>
+	<thead>
+			<tr>
+					<th>文件</th>
+					<th>作用</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>docs\从零搭建个人博客-完整指南.md</code></td>
+					<td>教程正文的<strong>唯一来源</strong></td>
+			</tr>
+			<tr>
+					<td><code>docs\从零搭建个人博客-完整指南.html</code></td>
+					<td>由上面的 Markdown 渲染，供浏览器阅读</td>
+			</tr>
+			<tr>
+					<td><code>docs\Build-Guide.ps1</code></td>
+					<td>渲染脚本：按自身位置找到博客目录，配合 <code>docs\guide-source</code> 生成 HTML</td>
+			</tr>
+			<tr>
+					<td><code>docs\Package-Blog.ps1</code></td>
+					<td>打包脚本：来源固定为博客根目录，输出可用 <code>-OutputPath</code> 指定</td>
+			</tr>
+			<tr>
+					<td><code>docs\guide-source\</code></td>
+					<td>教程用的 Hugo 配置与页面模板（渲染 HTML 必需）</td>
+			</tr>
+	</tbody>
+</table>
+<p>用法（在 VS Code 终端执行，先进入博客目录）：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powershell<span style="color:#1f2328">.</span>exe -NoProfile -ExecutionPolicy Bypass <span style="color:#0550ae">-File</span> <span style="color:#1f2328">.\</span>docs<span style="color:#1f2328">\</span><span style="color:#6639ba">Build-Guide</span><span style="color:#1f2328">.</span>ps1
+</span></span><span style="display:flex;"><span>powershell<span style="color:#1f2328">.</span>exe -NoProfile -ExecutionPolicy Bypass <span style="color:#0550ae">-File</span> <span style="color:#1f2328">.\</span>docs<span style="color:#1f2328">\</span><span style="color:#6639ba">Package-Blog</span><span style="color:#1f2328">.</span>ps1
+</span></span></code></pre></div><p>两个脚本都不会覆盖同级已有文件：打包脚本用“只新建”方式写文件，同名包已存在时会直接报错停止。脚本文件必须保存为 UTF-8 带 BOM，否则 Windows PowerShell 5.1 读中文会出错。</p>
+<p><strong>检查结果：</strong> 改完教程 Markdown 后你能自己重新生成 HTML，也能重新打出一个新基础包。</p>
+<p><strong>两种包不要把用途弄混：</strong></p>
+<table>
+	<thead>
+			<tr>
+					<th>包</th>
+					<th>里面有什么</th>
+					<th>不包含什么</th>
+					<th>用途</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>日常源码备份（<code>backup-blog.cmd</code>）</td>
+					<td>源码、配置、主题、脚本、<code>.github/</code></td>
+					<td>Hugo 程序、<code>.git</code> 历史、<code>public/</code></td>
+					<td>快速恢复平时写作的内容</td>
+			</tr>
+			<tr>
+					<td>交付基础包（新版 ZIP）</td>
+					<td>源码 + <code>.tools/hugo/</code>（含 <code>LICENSE</code>）+ <code>docs/</code> 教程与脚本</td>
+					<td><code>.git</code> 历史</td>
+					<td>换电脑、重新交付、重建教程与打包</td>
+			</tr>
+	</tbody>
+</table>
+<p>“基础包里有 Hugo”这句话的依据是打包脚本的收录规则和实际 ZIP 内容——<code>my-blog/.tools/hugo/hugo.exe</code> 与主题的 <code>LICENSE</code> 必须在包内。</p>
+<p><strong>恢复测试（建议每次生成备份后做一次）：</strong></p>
+<ol>
+<li>把 ZIP 解压到一个测试目录，不要覆盖正在使用的博客目录。</li>
+<li>用包内的 Hugo 构建：<code>.\.tools\hugo\hugo.exe --gc --minify</code>。</li>
+<li>检查 <code>public/index.html</code> 是否生成、站名是否为“一只无辜的银”。</li>
+<li>在终端执行 <code>Test-Path .\docs\从零搭建个人博客-完整指南.md</code>，确认教程随包带走。</li>
+</ol>
+<p><strong>检查结果：</strong> 至少有一份源码 ZIP 位于另一个位置，能打开看到主要文件；恢复测试能构建成功。</p>
+<p>参考：<a href="https://docs.github.com/en/repositories/archiving-a-github-repository/backing-up-a-repository">GitHub 仓库备份说明</a>。</p>
+<h2 id="26-换电脑或恢复博客">26. 换电脑或恢复博客</h2>
+<p><strong>目的：</strong> 让网站不依赖当前电脑一直存在。</p>
+<p><strong>从 GitHub 恢复：</strong></p>
+<ol>
+<li>新电脑安装 VS Code 和 Git。</li>
+<li>在 VS Code 命令面板运行 <code>Git: Clone</code>。</li>
+<li>输入自己博客仓库的 HTTPS 地址。</li>
+<li>选择本地保存位置，再打开克隆后的文件夹。</li>
+<li>运行 <code>start-blog.cmd</code>；它会在缺少 Hugo 时下载固定版本并校验。</li>
+<li>检查预览后继续编辑、提交和推送。</li>
+</ol>
+<p><strong>从源码 ZIP 恢复：</strong></p>
+<ol>
+<li>解压到一个新的文件夹，不直接覆盖仍有未保存工作的旧目录。</li>
+<li>用 VS Code 打开新文件夹。</li>
+<li>运行启动器下载工具并预览。</li>
+<li>需要接回 GitHub 历史时，优先克隆远端仓库，再将备份中的源码复制到克隆目录，保留克隆产生的 <code>.git</code>。</li>
+</ol>
+<p><strong>检查结果：</strong> 恢复后的目录能构建与预览，账号中的仓库和历史仍可访问。</p>
+<h2 id="27-长期维护与将来迁移">27. 长期维护与将来迁移</h2>
+<p><strong>目的：</strong> 避免一次平台变化或升级让博客无法继续使用。</p>
+<ul>
+<li>定期备份。内容更新较多时就增加备份频率。</li>
+<li>不把主题当作文章目录修改；日常维护集中在自己的内容与配置。</li>
+<li>框架、主题与部署 Actions 的固定版本记录在 <code>VERSIONS.md</code> 和工作流里。</li>
+<li>定期检查官方维护与安全更新；升级前先备份，在一份副本中试运行，再更新正式版本。</li>
+<li>本地 Hugo 与 GitHub 构建版本保持一致。升级 Hugo 时同时更新下载文件名、校验值和工作流配置。</li>
+<li>如果以后换到其他静态托管平台，可以构建 <code>public/</code> 并上传生成网页；同时按新网址调整 <code>baseURL</code>。</li>
+<li>如果以后购买独立域名，可以改绑到新平台，减少公开访问地址随平台迁移而改变的情况；域名要按时续费。</li>
+</ul>
+<p>免费托管不需要你自己的电脑一直开机。GitHub Pages 提供的是已经生成的网页；本机预览只用于你编辑与检查。</p>
+<h2 id="271-想显示最后更新时怎么做">27.1 想显示“最后更新”时怎么做</h2>
+<p>“根据完整 Git 历史自动取得更新时间”需要三件事<strong>配套</strong>使用，缺一不可：</p>
+<ol>
+<li>在 <code>hugo.yaml</code> 中把 <code>enableGitInfo</code> 设为 <code>true</code>；</li>
+<li>让构建时能拿到完整 Git 历史——本地仓库有完整历史即可，GitHub 上的 <code>.github/workflows/hugo.yaml</code> 需要 <code>actions/checkout</code> 带 <code>with: fetch-depth: 0</code>（本教程的工作流已经补上这一行）；</li>
+<li>在页面模板里显示 <code>.Lastmod</code>，例如 <code>themes/PaperMod/layouts/_partials/post_meta.html</code>。</li>
+</ol>
+<p>页面应当<strong>同时</strong>保留两种时间：继续用 <code>.Date</code> 显示<strong>发布时间</strong>，另加 <code>.Lastmod</code> 显示<strong>更新时间</strong>。只开启 GitInfo 不会自动出现更新时间，因为当前模板显示的是 <code>.Date</code>。</p>
+<p>如果不想依赖 Git，也可以在文章头部<strong>手动填写</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">lastmod</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>2026-10-05T20:00:00<span style="color:#0550ae">+08</span><span style="color:#1f2328">:</span><span style="color:#0550ae">00</span><span style="color:#fff">
+</span></span></span></code></pre></div><p>手动填写时不需要开启 GitInfo，也不需要完整历史。</p>
+<p><strong>检查结果：</strong> 你明确知道自动更新时间需要 GitInfo + 完整历史 + 模板三件套，手动填写则不需要。</p>
+<p><strong>检查结果：</strong> 你保有内容、主题、配置和备份，知道它们能在新电脑或新托管平台恢复。</p>
+<h2 id="28-常见问题按现象定位">28. 常见问题：按现象定位</h2>
+<table>
+	<thead>
+			<tr>
+					<th>现象</th>
+					<th>常见原因</th>
+					<th>具体检查与处理</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>git</code> 无法识别</td>
+					<td>Git 未安装或 VS Code 终端没刷新</td>
+					<td>安装官方 Git，关闭并重新打开 VS Code，再执行 <code>git --version</code></td>
+			</tr>
+			<tr>
+					<td>直接输入 <code>hugo</code> 无法识别</td>
+					<td>本教程没有加入全局 PATH</td>
+					<td>用 <code>.\.tools\hugo\hugo.exe</code>，或直接运行附带 CMD</td>
+			</tr>
+			<tr>
+					<td>本地网页打不开</td>
+					<td>预览未启动或已关闭</td>
+					<td>检查终端是否显示服务器地址，保持运行窗口打开</td>
+			</tr>
+			<tr>
+					<td><code>address already in use</code></td>
+					<td>1313 端口已有程序占用</td>
+					<td>若之前博客预览还在，直接使用；否则按下方备用端口方式启动</td>
+			</tr>
+			<tr>
+					<td>新文章本地有，线上没有</td>
+					<td>仍是草稿、未来日期、没 Push 或部署失败</td>
+					<td>检查 <code>draft</code>、<code>date</code>、GitHub 源码和 Actions 最新运行</td>
+			</tr>
+			<tr>
+					<td>保存后线上没变化</td>
+					<td>保存不是提交或上传</td>
+					<td>按第 23 步完成 Commit、Push 和部署确认</td>
+			</tr>
+			<tr>
+					<td>YAML 报错</td>
+					<td>缩进、引号或重复字段有问题</td>
+					<td>查看错误指出的文件与行号，恢复原来对齐并改正</td>
+			</tr>
+			<tr>
+					<td>图片不显示</td>
+					<td>路径、文件名或大小写不同</td>
+					<td>图片放在文章同目录；正文引用与文件名逐字一致</td>
+			</tr>
+			<tr>
+					<td>首页仍显示旧站名</td>
+					<td>名称未替换或没有重新构建</td>
+					<td>检查 <code>hugo.yaml</code> 的 <code>title</code> 与 <code>label.text</code>，保存后重新构建</td>
+			</tr>
+			<tr>
+					<td>第一次 Commit 失败</td>
+					<td>未设置署名或邮箱</td>
+					<td>按第 17 步设置本仓库身份</td>
+			</tr>
+			<tr>
+					<td>发布命令提示仓库已存在</td>
+					<td>账号已有同名仓库</td>
+					<td>不重复创建；用附录接入原仓库的方法</td>
+			</tr>
+			<tr>
+					<td>Push 被拒绝</td>
+					<td>远端有本地没有的提交或没有写权限</td>
+					<td>检查账号与仓库；先保留本地工作，再 Pull 处理冲突，不直接强推</td>
+			</tr>
+			<tr>
+					<td>Pages 找不到或不能使用</td>
+					<td>仓库权限、可见性或账号计划不同</td>
+					<td>确认自己的个人公开仓库，并检查 Pages 官方条件</td>
+			</tr>
+			<tr>
+					<td>Actions 首次失败</td>
+					<td>Pages 尚未设置为 Actions</td>
+					<td>完成第 20 步，再重新运行工作流</td>
+			</tr>
+			<tr>
+					<td>Actions 其他步骤红色</td>
+					<td>下载、构建、权限或部署错误</td>
+					<td>点开失败任务，复制第一条具体错误信息再定位</td>
+			</tr>
+			<tr>
+					<td>网页 404</td>
+					<td>部署未完成、仓库命名或网址不对</td>
+					<td>查看 Pages 页面实际网址和 Actions 结果</td>
+			</tr>
+			<tr>
+					<td>网站有文字但没有样式</td>
+					<td>构建地址或路径配置不一致</td>
+					<td>核对 <code>baseURL</code>；本教程优先采用用户名根站点</td>
+			</tr>
+	</tbody>
+</table>
+<p>备用端口启动命令，在博客目录执行：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powershell<span style="color:#1f2328">.</span>exe -NoProfile -ExecutionPolicy Bypass <span style="color:#0550ae">-File</span> <span style="color:#1f2328">.\</span>scripts<span style="color:#1f2328">\</span><span style="color:#6639ba">Start-Blog</span><span style="color:#1f2328">.</span>ps1 -Port <span style="color:#0550ae">1314</span>
+</span></span></code></pre></div><p>然后打开 <code>http://127.0.0.1:1314/</code>。不要为了启动第二份预览随意结束其他程序。</p>
+<p>附带 CMD 只给当前 PowerShell 进程设置执行策略，不修改系统级策略。若电脑由组织管理且禁止脚本，可直接运行已校验的 Hugo 可执行文件进行预览和构建；不需要更改组织策略：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe server <span style="color:#1f2328">-</span>-bind <span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span>1 <span style="color:#1f2328">-</span>-port <span style="color:#0550ae">1313</span> <span style="color:#1f2328">-</span>-baseURL http<span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#1f2328">//</span><span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span><span style="color:#0550ae">1</span><span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#0550ae">1313</span><span style="color:#1f2328">/</span> <span style="color:#1f2328">-</span>-buildDrafts
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe <span style="color:#1f2328">-</span>-gc <span style="color:#1f2328">-</span>-minify
+</span></span></code></pre></div><h2 id="附录-a如果自己的博客仓库已经存在">附录 A：如果自己的博客仓库已经存在</h2>
+<p>此分支仅在第 2 步确认已有同名仓库时使用，不要与“Publish to GitHub 新建仓库”同时做。</p>
+<ol>
+<li>先备份原仓库与原网站。</li>
+<li>在 VS Code 使用 <code>Git: Clone</code>，克隆你自己的已有仓库到一个新目录。</li>
+<li>查看原来的文件、分支和部署配置，确认没有必须保留的内容。</li>
+<li>将新的博客源码按实际需要整合进去，保留克隆产生的 <code>.git</code>，不要把别的仓库的 <code>.git</code> 复制过去。</li>
+<li>处理原来的配置或同名文件后，再本地预览、构建、提交并 Push。</li>
+<li>按实际分支名调整工作流；若仍采用本教程，使用 <code>main</code>。</li>
+</ol>
+<p>已有仓库的结构不同，接入过程可能需要个别调整。只提供公开仓库网址就足够我查看结构，不需要提供密码。</p>
+<h2 id="附录-b如果想自己从空目录搭建">附录 B：如果想自己从空目录搭建</h2>
+<p>主流程使用已经准备好的基础版本。以下说明从空目录获取 Hugo 与主题的过程，用于理解与以后重建；不要把它再执行到现有博客目录里。</p>
+<ol>
+<li>新建一个空目录，例如 <code>fresh-blog</code>，在 VS Code 打开它。</li>
+<li>按第 6 步获取固定版本 Hugo，放到 <code>.tools/hugo/</code>。</li>
+<li>在该空目录里执行：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe new site <span style="color:#1f2328">.</span>
+</span></span></code></pre></div><ol start="4">
+<li>下载 <a href="https://github.com/adityatelange/hugo-PaperMod/archive/d3768854d00ad003b0a8dbdba254ce9224377a01.zip">已固定的 PaperMod 主题 ZIP</a>。</li>
+<li>解压后，把包含 <code>theme.toml</code>、<code>layouts</code>、<code>assets</code> 的那个主题文件夹放到 <code>themes/PaperMod/</code>。确认直接存在 <code>themes/PaperMod/theme.toml</code>，不要多套一层目录。</li>
+<li>从基础包的 <code>my-blog/</code> 中复制以下文件与目录到 <code>fresh-blog/</code> 同名位置：<code>hugo.yaml</code>、<code>.gitignore</code>、<code>.gitattributes</code>、<code>VERSIONS.md</code>、<code>README.md</code>、<code>content/</code>、<code>layouts/</code>、<code>assets/</code>、<code>static/</code>、<code>archetypes/</code>、<code>scripts/</code>、<code>.github/</code>、<code>start-blog.cmd</code>、<code>build-blog.cmd</code>、<code>backup-blog.cmd</code>。这里使用基础包中已经验证的配置与模板；不是仅安装一个空主题就有完整本站。</li>
+<li>如果 <code>new site</code> 产生的是 <code>hugo.toml</code>，将那个默认文件移动到博客目录外；采用本教程的 <code>hugo.yaml</code>，避免同时保留两份配置。检查 <code>themes/PaperMod/theme.toml</code> 与 <code>.github/workflows/hugo.yaml</code> 均存在。</li>
+<li>从第 7～15 步运行预览、替换个人信息、创建真实文章并构建，再从第 16 步建立 Git 历史与部署。</li>
+</ol>
+<p>Hugo 工具生成网页；主题提供外观；配置决定栏目与基本信息；文章目录承载你的内容；工作流负责在 GitHub 上重建。这些部分共同组成完整博客。</p>
+<p>参考：<a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Installation">PaperMod 安装说明</a>。</p>
+<h2 id="附录-c查资料时优先使用这些官方链接">附录 C：查资料时优先使用这些官方链接</h2>
+<table>
+	<thead>
+			<tr>
+					<th>资料</th>
+					<th>链接</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Hugo 项目</td>
+					<td><a href="https://github.com/gohugoio/hugo">gohugoio/hugo</a></td>
+			</tr>
+			<tr>
+					<td>本教程使用的 Hugo 发布版本</td>
+					<td><a href="https://github.com/gohugoio/hugo/releases/tag/v0.167.0">Hugo v0.167.0</a></td>
+			</tr>
+			<tr>
+					<td>PaperMod 项目</td>
+					<td><a href="https://github.com/adityatelange/hugo-PaperMod">adityatelange/hugo-PaperMod</a></td>
+			</tr>
+			<tr>
+					<td>Hugo 文档</td>
+					<td><a href="https://gohugo.io/documentation/">Hugo 官方文档</a></td>
+			</tr>
+			<tr>
+					<td>Hugo 部署到 GitHub Pages</td>
+					<td><a href="https://gohugo.io/host-and-deploy/host-on-github-pages/">官方部署教程</a></td>
+			</tr>
+			<tr>
+					<td>VS Code Git 入门</td>
+					<td><a href="https://code.visualstudio.com/docs/sourcecontrol/quickstart">源代码管理教程</a></td>
+			</tr>
+			<tr>
+					<td>VS Code 与 GitHub</td>
+					<td><a href="https://code.visualstudio.com/docs/sourcecontrol/github">GitHub 集成说明</a></td>
+			</tr>
+			<tr>
+					<td>Git 下载</td>
+					<td><a href="https://git-scm.com/downloads/win">Git 官方下载</a></td>
+			</tr>
+			<tr>
+					<td>GitHub Pages 条件与限制</td>
+					<td><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits">官方限制说明</a></td>
+			</tr>
+			<tr>
+					<td>GitHub Pages 自定义域名</td>
+					<td><a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site">官方域名配置</a></td>
+			</tr>
+			<tr>
+					<td>仓库备份</td>
+					<td><a href="https://docs.github.com/en/repositories/archiving-a-github-repository/backing-up-a-repository">官方备份方法</a></td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="完成记录">完成记录</h2>
+<ul>
+<li><input disabled="" type="checkbox"> 已确认 GitHub 用户名与公开主页。</li>
+<li><input disabled="" type="checkbox"> 已用 VS Code 打开正确博客目录。</li>
+<li><input disabled="" type="checkbox"> 已看到本地预览。</li>
+<li><input disabled="" type="checkbox"> 已修改站名、个人介绍与网址。</li>
+<li><input disabled="" type="checkbox"> 已完成至少一篇自己的真实文章。</li>
+<li><input disabled="" type="checkbox"> 已处理示例内容与草稿状态。</li>
+<li><input disabled="" type="checkbox"> 已通过正式构建。</li>
+<li><input disabled="" type="checkbox"> 已建立本地 Git 历史。</li>
+<li><input disabled="" type="checkbox"> 已把源码上传到自己的公开仓库。</li>
+<li><input disabled="" type="checkbox"> 已将 Pages 来源设为 GitHub Actions。</li>
+<li><input disabled="" type="checkbox"> 已确认在线部署成功。</li>
+<li><input disabled="" type="checkbox"> 已从公开网址检查网站。</li>
+<li><input disabled="" type="checkbox"> 已保留独立源码备份。</li>
+</ul>
+<p>本教程已按账号 <code>yintaoc3-collab</code> 配置完成，站名“一只无辜的银”。文中 <code>zhangsan</code> 只用于演示用户名的位置；<code>YOUR_REPOSITORY</code> 表示你将来实际发布项目的仓库名，不是博客仓库，看到它属于正常情况。界面名称按当前官方说明整理，不同 VS Code 或 GitHub 界面语言可能略有不同，可按同名功能寻找。</p>
+
+      <p class="footer">本页无需联网即可阅读正文。外部资料链接、GitHub 登录与首次工具下载需要网络。</p>
+    </main>
+  </div>
+</body>
+</html>

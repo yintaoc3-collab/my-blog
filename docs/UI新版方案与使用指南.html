@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta name="generator" content="Hugo 0.167.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="从本地预览到 GitHub 免费上线，再到发文章、备份、恢复的完整中文教程。">
+  <title>从零搭建个人博客：Windows &#43; VS Code 完整操作指南</title>
+  <style>
+    :root{--ink:#24332f;--muted:#61716b;--line:#dce4de;--paper:#fffdf7;--green:#176b53;--soft:#edf4ef}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f0f3ee;color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;line-height:1.85;font-size:16px}
+    .shell{max-width:1380px;margin:auto;display:grid;grid-template-columns:310px minmax(0,1fr);gap:26px;padding:30px 24px}aside{position:sticky;top:24px;height:calc(100vh - 48px);overflow:auto;padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:12px}aside strong{font-size:19px;display:block}aside p{font-size:13px;color:var(--muted);margin:6px 0 16px}
+    aside ul{list-style:none;padding:0;margin:0}aside li{margin:5px 0}aside ul ul{margin:4px 0 8px;padding-left:12px;border-left:2px solid var(--line)}aside a{text-decoration:none;color:var(--ink);font-size:14px;line-height:1.5;display:block;padding:4px 0}aside a:hover{color:var(--green)}
+    main{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:44px 52px;box-shadow:0 6px 22px #23352c08}h1{font-size:32px;line-height:1.4;letter-spacing:-.3px;margin:0 0 20px}h2{font-size:24px;margin-top:54px;padding-top:22px;border-top:2px solid var(--line);line-height:1.5}h3{font-size:19px;margin-top:32px;line-height:1.6}p{margin:15px 0}a{color:var(--green);text-underline-offset:3px;overflow-wrap:anywhere}strong{font-weight:700}li{margin:7px 0}ol,ul{padding-left:26px}
+    code{font-family:Consolas,"Cascadia Code",monospace;font-size:.9em;background:var(--soft);padding:2px 6px;border-radius:4px;overflow-wrap:anywhere}pre{padding:18px 20px;overflow:auto;background:#f3f5f0!important;border:1px solid var(--line);border-radius:8px;line-height:1.6}pre code{padding:0;background:none;overflow-wrap:normal;font-size:14px}.highlight pre{margin:16px 0}
+    table{display:block;overflow-x:auto;max-width:100%;border-collapse:collapse;font-size:14px;margin:24px 0}th,td{border:1px solid var(--line);padding:12px 14px;min-width:140px;vertical-align:top}th{background:var(--soft);text-align:left}tr:nth-child(even){background:#f7f9f4}blockquote{border-left:4px solid var(--green);margin:20px 0;padding:2px 20px;background:var(--soft)}.footer{border-top:1px solid var(--line);padding-top:24px;margin-top:40px;font-size:13px;color:var(--muted)}.check{background:var(--soft);padding:12px 16px;border-radius:8px;color:var(--green);margin-bottom:28px}
+    @media(max-width:1000px){.shell{grid-template-columns:240px minmax(0,1fr);gap:16px;padding:18px}main{padding:30px}aside{padding:16px}h1{font-size:28px}}
+    @media(max-width:760px){.shell{display:block;padding:12px}aside{position:static;height:auto;max-height:350px;margin-bottom:16px}main{padding:26px 20px}body{font-size:15px}h1{font-size:26px}h2{font-size:22px}pre{padding:14px}th,td{min-width:120px;padding:10px}}
+    @media print{body{background:white;font-size:11pt}.shell{display:block;padding:0}aside{display:none}main{border:0;box-shadow:none;padding:0}h2{break-before:auto;break-after:avoid}h3{break-after:avoid}pre{white-space:pre-wrap;overflow-wrap:anywhere;break-inside:avoid}table{display:table;width:100%;font-size:9pt}th,td{min-width:0;padding:7px}a{color:inherit}.check{display:none}h1{font-size:24pt}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside aria-label="教程目录">
+      <strong>完整教程目录</strong>
+      <p>点击跳到对应步骤。按编号依次完成；做完看“检查结果”。</p>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-这次参考了哪些网站">1. 这次参考了哪些网站</a></li>
+    <li><a href="#2-最终界面设计">2. 最终界面设计</a>
+      <ul>
+        <li><a href="#21-首页">2.1 首页</a></li>
+        <li><a href="#22-栏目页与文章页">2.2 栏目页与文章页</a></li>
+        <li><a href="#23-配色与尺寸">2.3 配色与尺寸</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-怎么看这份新版">3. 怎么看这份新版</a>
+      <ul>
+        <li><a href="#第一步解压到一个新目录">第一步：解压到一个新目录</a></li>
+        <li><a href="#第二步用-vs-code-打开源码根目录">第二步：用 VS Code 打开源码根目录</a></li>
+        <li><a href="#第三步启动新版预览">第三步：启动新版预览</a></li>
+        <li><a href="#第四步检查界面">第四步：检查界面</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-怎样发布第一篇真实作品">4. 怎样发布第一篇真实作品</a>
+      <ul>
+        <li><a href="#第一步创建作品目录">第一步：创建作品目录</a></li>
+        <li><a href="#第二步填写文章信息">第二步：填写文章信息</a></li>
+        <li><a href="#第三步加入真实封面">第三步：加入真实封面</a></li>
+        <li><a href="#第四步准备正式发布">第四步：准备正式发布</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-如何替换当前博客界面">5. 如何替换当前博客界面</a></li>
+    <li><a href="#6-以后怎样调整外观">6. 以后怎样调整外观</a></li>
+    <li><a href="#7-验收与长期使用">7. 验收与长期使用</a></li>
+    <li><a href="#8-二次元配图怎样更换">8. 二次元配图怎样更换</a></li>
+  </ul>
+</nav>
+    </aside>
+    <main>
+      <div class="check">离线阅读版 · Windows / VS Code / Git · 可用浏览器 Ctrl+P 打印或保存为 PDF</div>
+      <h1 id="银的个人工作台二次元版-ui-与使用指南">银的个人工作台：二次元版 UI 与使用指南</h1>
+<p>这是一份可以运行的 Hugo 博客源码。账号为 <code>yintaoc3-collab</code>，站名为「一只无辜的银」。新版在独立目录里完成；你的 <code>D:\本地博客</code> 和以前的 ZIP 保留原样。</p>
+<h2 id="1-这次参考了哪些网站">1. 这次参考了哪些网站</h2>
+<p>以下链接是查阅的官方网站或项目自己的仓库。表中的「借鉴」是我对它们的设计归纳；新版页面结构与 CSS 为本次编写。2026-10-06 增加了二次元设计参考，以及两张通过内置 image_gen 生成的配套插画；实际配图的保存路径和完整提示词见 <code>二次元配图与参考来源.md</code>。</p>
+<table>
+	<thead>
+			<tr>
+					<th>来源</th>
+					<th>直接查看</th>
+					<th>本次借鉴的方向</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>微软 Fluent 2</td>
+					<td><a href="https://fluent2.microsoft.design/">设计系统</a> · <a href="https://github.com/microsoft/fluentui">开源组件</a></td>
+					<td>一致的圆角、浅色层次、清楚的按钮和交互状态</td>
+			</tr>
+			<tr>
+					<td>Vercel Geist</td>
+					<td><a href="https://vercel.com/geist/introduction">设计系统</a></td>
+					<td>网格对齐、留白、主次文字与开发者风格的等宽小标签</td>
+			</tr>
+			<tr>
+					<td>GitHub Primer</td>
+					<td><a href="https://primer.style/">设计系统</a> · <a href="https://github.com/primer/react">开源组件</a></td>
+					<td>导航、标签、卡片和源码入口的组织方式</td>
+			</tr>
+			<tr>
+					<td>乐鑫 Espressif</td>
+					<td><a href="https://developer.espressif.com/">开发者网站</a></td>
+					<td>封面、文章日期、标签、摘要与硬件技术内容的组合</td>
+			</tr>
+			<tr>
+					<td>Fuwari</td>
+					<td><a href="https://fuwari.vercel.app/">实际演示</a> · <a href="https://github.com/saicaca/fuwari">GitHub 源码</a> · <a href="https://github.com/saicaca/fuwari/blob/main/LICENSE">MIT 许可</a></td>
+					<td>轻盈的彩色卡片、内容分区和浅色/深色切换</td>
+			</tr>
+			<tr>
+					<td>Blowfish</td>
+					<td><a href="https://blowfish.page/">实际演示</a> · <a href="https://github.com/nunocoracao/blowfish">GitHub 源码</a> · <a href="https://github.com/nunocoracao/blowfish/blob/main/LICENSE">MIT 许可</a></td>
+					<td>Hugo 的封面文章卡片、作品入口和内容展示方式</td>
+			</tr>
+			<tr>
+					<td>Shirone</td>
+					<td><a href="https://github.com/LyraVoid/Shirone">GitHub 源码</a> · <a href="https://shirone.mysqil.com/">项目演示</a></td>
+					<td>二次元插画与安静阅读区域的组合、柔和卡片、配套明暗主题</td>
+			</tr>
+			<tr>
+					<td>Redefine</td>
+					<td><a href="https://github.com/EvanNotFound/hexo-theme-redefine">GitHub 源码</a> · <a href="https://redefine-docs.ohevan.com/en/home/home_banner">首页横幅文档</a></td>
+					<td>用首屏图片建立个人风格，图片与标题分层组织</td>
+			</tr>
+	</tbody>
+</table>
+<p>查阅时，Mizuki 仓库已明确宣布即将停止维护、迁移到 Shirone，所以这里把 Shirone 列为更新后的参考入口。参考项目的框架没有装进你的博客；演示站的图片也没有直接复制到包中。网上可免费使用的备选素材另列在配图说明里。</p>
+<p>保留原来的 Hugo + PaperMod 基础，所以仍然使用 Markdown、便携 Hugo 和现有 GitHub Actions 部署。没有为这次外观更换新增 Node、npm、React 或 Astro 的构建要求。</p>
+<h2 id="2-最终界面设计">2. 最终界面设计</h2>
+<h3 id="21-首页">2.1 首页</h3>
+<ol>
+<li>顶部：蓝色「银」字标识、站名、五个栏目入口、搜索、主题切换、GitHub。</li>
+<li>第一屏：左侧个人介绍与「探索我的作品」按钮；右侧银发角色在电子工作台前调试开发板的二次元插画。蓝白配色和浅色图片边框与界面保持一致。</li>
+<li>四张栏目卡片：蓝色作品、绿色开源、紫色笔记、橙色好物。数量来自实际文章，零篇时显示「待收录」。</li>
+<li>最近记录：按日期展示最新六篇文章。有文章时出现封面卡片；没有文章时出现完整的待发布提示。</li>
+<li>GitHub 横幅：同一角色的 Q 版小图与代码主页入口放在一起。小图随正文区域排列，不悬浮遮住内容。</li>
+</ol>
+<p>这是嵌入式作品展示博客的版式。两张插画都是 AI 生成的虚构角色，不是你的本人照片或实际作品照片，也不能作为接线图使用。</p>
+<h3 id="22-栏目页与文章页">2.2 栏目页与文章页</h3>
+<ul>
+<li>栏目页有标题面板，文章以卡片排列，超过每页八篇会分页。</li>
+<li>图片未提供时，卡片使用该栏目的图标封面，不出现破图框。</li>
+<li>文章保留发布时间、阅读信息、标签、代码复制、上一篇/下一篇。</li>
+<li>有二级标题的文章可显示目录；大屏幕目录放在正文左侧，手机上移到正文前。</li>
+<li>文章可增加 <code>repo</code> 字段，在标题下面显示「查看项目源码」按钮。</li>
+<li>文章页面的署名等仍来自 <code>hugo.yaml</code>，个人经历仍由你自己填写。</li>
+</ul>
+<h3 id="23-配色与尺寸">2.3 配色与尺寸</h3>
+<table>
+	<thead>
+			<tr>
+					<th>项目</th>
+					<th>当前值</th>
+					<th>用途</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>主强调色</td>
+					<td><code>#3263F4</code></td>
+					<td>按钮、作品栏和链接</td>
+			</tr>
+			<tr>
+					<td>深色文字</td>
+					<td><code>#17243C</code></td>
+					<td>标题</td>
+			</tr>
+			<tr>
+					<td>浅色卡片</td>
+					<td><code>#FFFFFF</code></td>
+					<td>承载主要内容</td>
+			</tr>
+			<tr>
+					<td>深色主题底色</td>
+					<td><code>#0D1422</code></td>
+					<td>夜间阅读</td>
+			</tr>
+			<tr>
+					<td>正文容器</td>
+					<td>最大 1160px</td>
+					<td>首页和卡片排版</td>
+			</tr>
+			<tr>
+					<td>桌面文章字号</td>
+					<td>16px</td>
+					<td>长文阅读</td>
+			</tr>
+			<tr>
+					<td>手机文章字号</td>
+					<td>15px</td>
+					<td>小屏阅读</td>
+			</tr>
+			<tr>
+					<td>卡片圆角</td>
+					<td>14–20px</td>
+					<td>保持组件一致</td>
+			</tr>
+	</tbody>
+</table>
+<p>中文使用电脑系统字体，图片和图标在本地。页面不需要从外部字体 CDN 下载字体。</p>
+<h2 id="3-怎么看这份新版">3. 怎么看这份新版</h2>
+<h3 id="第一步解压到一个新目录">第一步：解压到一个新目录</h3>
+<p>做法：右键新版 ZIP →「全部解压」→ 选择 <code>D:\博客UI新版</code> 等新文件夹。包里的源码文件夹叫 <code>my-blog</code>。不要把整个文件夹覆盖到现有博客里。</p>
+<p>目的：先独立体验、保留当前版本，也避免解压层级混淆。</p>
+<p>检查：打开源码根目录，应该同时看到 <code>hugo.yaml</code>、<code>content</code>、<code>layouts</code>、<code>docs</code>、<code>start-ui-preview.cmd</code>。如果只看到 <code>my-blog</code> 一个文件夹，再点进去一层。</p>
+<h3 id="第二步用-vs-code-打开源码根目录">第二步：用 VS Code 打开源码根目录</h3>
+<p>做法：VS Code →「文件」→「打开文件夹」→ 选中刚才含 <code>hugo.yaml</code> 的目录。</p>
+<p>目的：以后文章和配置都在这一个目录编辑。</p>
+<h3 id="第三步启动新版预览">第三步：启动新版预览</h3>
+<p>做法：双击 <code>start-ui-preview.cmd</code>，或在源码根目录终端执行：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powershell -NoProfile -ExecutionPolicy Bypass <span style="color:#0550ae">-File</span> <span style="color:#1f2328">.\</span>scripts<span style="color:#1f2328">\</span><span style="color:#6639ba">Start-Blog</span><span style="color:#1f2328">.</span>ps1 -Port <span style="color:#0550ae">1322</span>
+</span></span></code></pre></div><p>目的：让 Hugo 将 Markdown、模板和样式实时生成网页；草稿只在本地预览可见。</p>
+<p>检查：浏览器打开 <a href="http://127.0.0.1:1322/">http://127.0.0.1:1322/</a>。终端应该显示该网址。关闭终端或按 <code>Ctrl+C</code> 后，预览结束。如果 1322 被占用，把命令中的端口改为其他空闲端口，并打开对应网址。</p>
+<p>交付时已运行的预览是 <a href="http://127.0.0.1:1320/">http://127.0.0.1:1320/</a>，它由这次工作目录里的独立副本提供；从 ZIP 解压重新运行用 1322，避免冲突。</p>
+<h3 id="第四步检查界面">第四步：检查界面</h3>
+<ol>
+<li>点击「嵌入式作品」，应该出现栏目标题和待发布提示。</li>
+<li>点击「关于我」，检查自己的介绍。</li>
+<li>点击月亮/太阳按钮，检查浅色和深色主题。</li>
+<li>缩窄浏览器，点击右上角菜单图标，检查手机导航。</li>
+<li>搜索「关于我」，应找到已经存在的介绍页。</li>
+</ol>
+<p>目的：先确认自己喜欢页面排版以及操作方式，再开始录入真实内容。</p>
+<h2 id="4-怎样发布第一篇真实作品">4. 怎样发布第一篇真实作品</h2>
+<h3 id="第一步创建作品目录">第一步：创建作品目录</h3>
+<p>在 <code>content/projects</code> 中创建一个英文目录，例如 <code>my-first-project</code>，在里面新建 <code>index.md</code>。文件结构如下：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>content/
+</span></span><span style="display:flex;"><span>└─ projects/
+</span></span><span style="display:flex;"><span>   ├─ _index.md              ← 栏目说明，保留
+</span></span><span style="display:flex;"><span>   └─ my-first-project/
+</span></span><span style="display:flex;"><span>      ├─ index.md            ← 文章
+</span></span><span style="display:flex;"><span>      └─ cover.jpg           ← 你的实物照片，可稍后添加
+</span></span></code></pre></div><p>目的：文章与照片放在同一目录，更容易复制、备份和维护。</p>
+<h3 id="第二步填写文章信息">第二步：填写文章信息</h3>
+<p>复制下面的内容到 <code>index.md</code>。每个占位内容都改成自己的实际信息。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#24292e">---</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">title</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;你的真实作品名称&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">date</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>2026-10-05T12:00:00<span style="color:#0550ae">+08</span><span style="color:#1f2328">:</span><span style="color:#0550ae">00</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">draft</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#cf222e">true</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">description</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;用一两句话说明这个作品解决什么问题、有哪些功能。&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">tags</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;填写芯片平台&#34;</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;填写技术标签&#34;</span><span style="color:#1f2328">]</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"># 有照片后再取消下面三行的注释，图片文件名要完全一致。</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"># cover:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">#   image: &#34;cover.jpg&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">#   alt: &#34;作品实物照片的文字描述&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"># 有公开项目仓库后再取消下一行注释，并换成真实地址。</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"># repo: &#34;https://github.com/yintaoc3-collab/你的项目仓库&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#24292e">---</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">## 作品简介</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>写清楚用途、完成程度和目前能演示的功能。<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">## 硬件与接线</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>写出芯片、模块、供电、引脚连接；有原理图可一起放进该目录。<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">## 固件与实现</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>说明开发环境、关键代码、编译和烧录方法。<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">## 实际效果</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>放入实物图片、运行结果和测量数据。<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">## 复现与已知限制</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>写明步骤、依赖版本、还没有完成的部分。<span style="color:#fff">
+</span></span></span></code></pre></div><p>目的：新界面会从这些字段取标题、日期、摘要、标签和图片，不需要修改首页 HTML。</p>
+<p><code>draft: true</code> 代表草稿。预览中可以看到，但正式构建不会发布。<code>date</code> 填实际发布时间，未来日期默认也不会发布。</p>
+<h3 id="第三步加入真实封面">第三步：加入真实封面</h3>
+<p>做法：把一张实物照片命名为 <code>cover.jpg</code>，放到 <code>index.md</code> 旁边。取消 <code>cover</code> 三行的注释。建议 16:9 横图，宽度约 1280px；先压缩成几百 KB，避免大照片拖慢网站。</p>
+<p>目的：卡片有实物照片，才能更好地展示你的嵌入式作品。暂时没有照片时，保留注释，新界面会使用默认图标封面。</p>
+<p>检查：保存文章后首页出现卡片，点击进入文章。首页只展示最新六篇，每个栏目中可以继续看全部内容。</p>
+<h3 id="第四步准备正式发布">第四步：准备正式发布</h3>
+<p>做法：检查正文、照片、仓库链接，再将 <code>draft: true</code> 改为 <code>draft: false</code>，保存后双击 <code>build-blog.cmd</code>。</p>
+<p>目的：验证真正发布的页面，而不只是含草稿的预览。构建脚本只清理专用 <code>public</code> 输出目录里的旧网页，不清理你的正文和照片。</p>
+<p>检查：构建成功且目标文章出现在 <code>public/projects/my-first-project/index.html</code>。然后按完整教程的 Git 提交、推送和 GitHub Pages 流程发布。</p>
+<p>另有四个可复制模板位于 <code>docs/templates</code>。它们不在 <code>content</code> 中，所以不会作为你的作品公开。</p>
+<h2 id="5-如何替换当前博客界面">5. 如何替换当前博客界面</h2>
+<p>建议先用新版独立目录试用。确认需要使用时，可把 UI 文件同步到 <code>D:\本地博客</code>，内容文件继续沿用原来的目录。</p>
+<ol>
+<li>停止准备改动的那份本地预览，避免复制中途反复重建。</li>
+<li>先将当前 <code>D:\本地博客</code> 做一份目录外备份。</li>
+<li>复制新版 <code>layouts</code> 目录和 <code>assets/css/extended</code> 目录到当前博客对应位置；新版有同名文件，覆盖前以备份为依据。</li>
+<li>复制新版 <code>assets/images/anime-workbench.png</code> 与 <code>assets/images/anime-mascot.png</code> 到同名目录；首页模板会用 Hugo 在构建时生成缩小后的网页图片，漏掉这两张原图会导致构建失败。<code>static/images/workbench.svg</code> 为上一版插画，可一并保留。</li>
+<li>复制 <code>scripts/Build-Blog.ps1</code> 和 <code>start-ui-preview.cmd</code>。这次只调整了构建输出清洁规则，现有 Pages 工作流可以继续使用。</li>
+<li>如要以后从模板创建文章，复制新版的 <code>archetypes</code> 和 <code>docs/templates</code>。</li>
+<li>用新的 <code>Start-Blog.ps1 -Port 1322</code> 命令预览，检查栏目、搜索、手机导航、文章内容。</li>
+<li>验证后再提交 Git。初次上传先在登录后的 GitHub 中创建 <code>yintaoc3-collab.github.io</code> 仓库，按完整教程第 16～22 步操作；「Clone」仅用于克隆已经存在的仓库。</li>
+</ol>
+<p>目的：在不搬动文章的情况下替换显示层。若你已经新增内容，不要用新版的空 <code>content</code> 目录覆盖自己的内容。</p>
+<p>本次交付没有替你修改 D 盘博客、推送 GitHub 或设置线上 Pages。</p>
+<h2 id="6-以后怎样调整外观">6. 以后怎样调整外观</h2>
+<table>
+	<thead>
+			<tr>
+					<th>想改什么</th>
+					<th>编辑哪个文件</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>站名、作者、网址</td>
+					<td><code>hugo.yaml</code></td>
+			</tr>
+			<tr>
+					<td>首页大标题、介绍和按钮</td>
+					<td><code>layouts/home.html</code></td>
+			</tr>
+			<tr>
+					<td>四个栏目卡片文字</td>
+					<td><code>layouts/home.html</code> 中的栏目列表</td>
+			</tr>
+			<tr>
+					<td>可选浏览器与手机图标</td>
+					<td><code>layouts/_partials/head.html</code>、<code>hugo.yaml</code> 的 <code>params.assets</code></td>
+			</tr>
+			<tr>
+					<td>导航与「银」字标识</td>
+					<td><code>layouts/_partials/header.html</code></td>
+			</tr>
+			<tr>
+					<td>颜色、圆角、字号、手机布局</td>
+					<td><code>assets/css/extended/zz-workbench.css</code></td>
+			</tr>
+			<tr>
+					<td>文章卡片的图片、摘要、标签</td>
+					<td><code>layouts/_partials/lab-card.html</code></td>
+			</tr>
+			<tr>
+					<td>文章阅读结构</td>
+					<td><code>layouts/single.html</code></td>
+			</tr>
+			<tr>
+					<td>栏目页和分页</td>
+					<td><code>layouts/list.html</code></td>
+			</tr>
+			<tr>
+					<td>手机菜单的展开/关闭</td>
+					<td><code>layouts/_partials/extend_footer.html</code></td>
+			</tr>
+			<tr>
+					<td>首页二次元场景原图</td>
+					<td><code>assets/images/anime-workbench.png</code></td>
+			</tr>
+			<tr>
+					<td>GitHub 横幅 Q 版角色</td>
+					<td><code>assets/images/anime-mascot.png</code></td>
+			</tr>
+	</tbody>
+</table>
+<p>新版通过项目自己的 <code>layouts</code> 覆盖 PaperMod，而不修改 <code>themes/PaperMod</code> 里的上游源码。以后升级主题时仍需预览复核，因为这些覆盖模板与主题接口有关。</p>
+<p>首页只显示最近六篇；旧文章一直保留在栏目和搜索中。没有评论、数据库、登录后台、在线上传或在线编辑器，这些不属于现阶段的个人静态博客需求。</p>
+<h2 id="7-验收与长期使用">7. 验收与长期使用</h2>
+<p>验收记录另见 <code>UI验收记录.md</code>。测试用文章放在工作目录的 <code>work/ui-qa</code>，不进入正式源码包；正式内容目前仍是你的介绍页与四个空栏目。</p>
+<p>长期使用建议：先发布一篇真实作品、一份真实方案；每次改动先在本地预览，保留 Git 提交和目录外备份。主题和 Hugo 不必追着每次发布升级，升级时保留可恢复的旧版本。免费的 GitHub Pages 仍由其平台规则和服务状态决定，不能承诺永久免费或永远不中断。</p>
+<p>保留包内 Hugo 和 PaperMod 的 LICENSE。Fuwari、Blowfish、Shirone 与 Redefine 是研究参考，其代码没有集成到这个包里。手机菜单脚本、新界面模板、样式和配图都随源码交付，可继续修改。</p>
+<h2 id="8-二次元配图怎样更换">8. 二次元配图怎样更换</h2>
+<ol>
+<li>在源码根目录打开 <code>assets/images</code>。先把想替换的原图复制到博客目录外作为备份。</li>
+<li>首页场景使用 4:3 横图。把新的图片保存为 <code>anime-workbench.png</code>，必须是实际 PNG 文件；不要仅把 JPG 扩展名改成 PNG。场景有明显人物时，保证头部和手部在画面内。</li>
+<li>Q 版角色使用透明 PNG，保存为 <code>anime-mascot.png</code>。建议 2:3 竖图，四周留白；不需要给图片添加背景颜色。</li>
+<li>保存后刷新本地预览。首页主图在桌面生成 1120px 宽 JPEG，手机生成 640px 宽 JPEG；Q 版图生成 240px 宽 PNG，保留透明度。原图保留在源码中，浏览器只加载处理后的图片。</li>
+<li>点击主题按钮，检查深色边框与角色效果；把浏览器缩窄，确认角色没有挡住按钮。确认后运行 <code>build-blog.cmd</code>，再提交 Git。</li>
+</ol>
+<p>目的：以后换图片只需要替换这两个文件，图片尺寸和地址由 Hugo 自动处理，不用自己改生成后的 <code>public</code> 文件。所有实际配图随网站保存，无需第三方图片链接或外部角色服务。</p>
+
+      <p class="footer">本页无需联网即可阅读正文。外部资料链接、GitHub 登录与首次工具下载需要网络。</p>
+    </main>
+  </div>
+</body>
+</html>

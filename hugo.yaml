@@ -1,0 +1,59 @@
+baseURL: "https://yintaoc3-collab.github.io/"
+title: "一只无辜的银"
+locale: "zh-CN"
+defaultContentLanguage: "zh"
+theme: "PaperMod"
+timeZone: "Asia/Shanghai"
+hasCJKLanguage: true
+enableRobotsTXT: true
+enableGitInfo: false
+pagination:
+  pagerSize: 8
+outputs:
+  home: [HTML, RSS, JSON]
+taxonomies:
+  tag: tags
+  category: categories
+params:
+  description: "记录嵌入式作品、分享开源方案、整理技术笔记与实用资源。"
+  author: "一只无辜的银"
+  defaultTheme: auto
+  disableThemeToggle: false
+  mainSections: [projects, opensource, notes, goodies]
+  ShowReadingTime: true
+  ShowWordCount: true
+  ShowToc: true
+  TocOpen: true
+  ShowCodeCopyButtons: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowShareButtons: false
+  comments: false
+  DateFormat: "2006 年 1 月 2 日"
+  homeInfoParams:
+    Title: "把想法做成作品，把经验写成记录。"
+    Content: "这里收集我的嵌入式作品、开源方案、技术笔记，以及值得留下的工具和资源。"
+  assets:
+    favicon: "/favicon.svg"
+    disableHLJS: true
+  label:
+    text: "一只无辜的银"
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    minMatchCharLength: 1
+    keys: [title, permalink, summary, content]
+menu:
+  main:
+    - {identifier: projects, name: "嵌入式作品", url: "/projects/", weight: 10}
+    - {identifier: opensource, name: "开源方案", url: "/opensource/", weight: 20}
+    - {identifier: notes, name: "技术笔记", url: "/notes/", weight: 30}
+    - {identifier: goodies, name: "好物分享", url: "/goodies/", weight: 40}
+    - {identifier: about, name: "关于我", url: "/about/", weight: 50}
+    - {identifier: search, name: "搜索", url: "/search/", weight: 60}
+markup:
+  goldmark:
+    renderer:
+      unsafe: false
+  highlight:
+    noClasses: false

@@ -1,0 +1,16 @@
+baseURL: "https://example.invalid/"
+title: "从零搭建个人博客：Windows + VS Code 完整操作指南"
+locale: "zh-CN"
+defaultContentLanguage: "zh"
+disableKinds: [taxonomy, term, RSS, sitemap]
+markup:
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+    ordered: false
+  goldmark:
+    renderer:
+      unsafe: false
+  highlight:
+    noClasses: true
+    style: github

@@ -1,0 +1,23 @@
+<script>
+(() => {
+  const button = document.getElementById('menu-toggle');
+  const menu = document.getElementById('site-menu');
+  if (!button || !menu) return;
+  function closeMenu() {
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', '展开导航菜单');
+    menu.classList.remove('is-open');
+  }
+  button.addEventListener('click', () => {
+    const open = button.getAttribute('aria-expanded') !== 'true';
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', open ? '收起导航菜单' : '展开导航菜单');
+    menu.classList.toggle('is-open', open);
+  });
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') { closeMenu(); button.focus(); }
+  });
+  document.addEventListener('click', event => { if (!event.target.closest('.site-nav')) closeMenu(); });
+})();
+</script>
