@@ -1,18 +1,18 @@
 # 从零搭建个人博客：Windows + VS Code 完整操作指南
 
-整理日期：2026 年 10 月 5 日（2026 年 10 月 5 日按新版配置更新）。适用目标：展示嵌入式作品、发布开源方案、写技术笔记、分享工具和资源。
+整理日期：2026 年 10 月 5 日（2026 年 10 月 6 日按正式目录和已上线仓库更新）。适用目标：展示嵌入式作品、发布开源方案、写技术笔记、分享工具和资源。
 
 本教程统一采用 **Hugo + PaperMod + GitHub Pages**。在 Windows 电脑上用 VS Code 编辑，通过 VS Code 的 Git 界面提交、上传，由 GitHub 自动生成并发布网页。
 
 你已有 GitHub 账号，电脑上也已有 VS Code 和 Git。本教程仍写出环境检查方法，方便你以后换电脑时重新操作。
 
-你的博客源码放在 `D:\本地博客`，教程放在 `D:\本地博客\docs`。这个目录也是从原基础包复制来的保留副本：`C:\Users\42891\Documents\Codex\2026-10-05\n-n\outputs\my-blog`（未改动，作为最初版本保存）。
+你的博客源码放在 `D:\博客正式版\my-blog`，教程放在 `D:\博客正式版\my-blog\docs`。这个目录也是从原基础包复制来的保留副本：`C:\Users\42891\Documents\Codex\2026-10-05\n-n\outputs\my-blog`（未改动，作为最初版本保存）。
 
-博客已按你的账号配置好站名、作者和网址，站名是“一只无辜的银”。原来附带的四篇 `example-*` 示例文章**已经删除**（删除前的文件保留在 `.backups\removed-examples-20261005.zip`），四个栏目现在都是空的，只保留各自的 `_index.md`。**目前只是本地文件，尚未创建你的 GitHub 仓库，也未公开发布。**
+博客已按你的账号配置好站名、作者和网址，站名是“一只无辜的银”。原来附带的四篇 `example-*` 示例文章**已经删除**（删除前的文件保留在 `.backups\removed-examples-20261005.zip`），四个栏目现在都是空的，只保留各自的 `_index.md`。**当前正式版已连接 `https://github.com/yintaoc3-collab/my-blog` 并完成 GitHub Pages 部署。在线地址是 `https://yintaoc3-collab.github.io/my-blog/`。本地默认预览端口为 1321，占用时会自动换到附近的空闲端口。**
 
-先完成本地阶段，确认内容和样式，再完成上线阶段。每完成一步，都看一下本步的“检查结果”，符合之后再继续。
+当前电脑上的正式版已经完成初始化与上线，日常优先阅读 `docs\开始使用.html`，然后从第 23 步继续写文章和维护。本教程仍保留从零安装与重建的完整过程；已有的初始化、创建仓库、首次上传步骤无需重复。
 
-本次交付依然是三个文件：本教程的 `.md` 原文、可双击用浏览器阅读的 `.html` 离线版，以及新版 `个人博客完整教程与基础包-已配置-yintaoc3-collab.zip`。ZIP 中包含 `my-blog/`（已配置好的博客源码）、`docs/`（两种教程、教程渲染脚本与新打包脚本，可随时重新生成）以及便携 Hugo。先全部解压，再打开博客目录；若你直接使用 `D:\本地博客` 这份现成文件夹，就无需再次解压。
+本次交付依然是三个文件：本教程的 `.md` 原文、可双击用浏览器阅读的 `.html` 离线版，以及新版 `个人博客-正式版完成-yintaoc3-collab-20261006.zip`。ZIP 中包含 `my-blog/`（正式版源码），其内部的 `docs/` 包含使用说明、完整教程与界面指南，并带便携 Hugo、教程生成脚本和打包脚本。先全部解压，再打开博客目录；若你直接使用 `D:\博客正式版\my-blog` 这份现成文件夹，就无需再次解压。
 
 **怎样阅读：** 第 0～15 步完成本地修改与验证，第 16～22 步完成 GitHub 上线，第 23～28 步用于日常更新与长期维护。附录是遇到特殊情况时使用的补充说明。命令只复制代码框内的内容，不要把解释文字或终端中的 `PS C:\...>` 提示符也复制进去。每条命令运行完再输入下一条；占位文字必须先换成自己的信息。
 
@@ -31,7 +31,7 @@ GitHub Actions 自动运行 Hugo
                 ↓
 GitHub Pages 对外提供网站
                 ↓
-别人访问 https://你的用户名.github.io/
+别人访问 https://yintaoc3-collab.github.io/my-blog/
 ```
 
 | 名称 | 你可以怎样理解 | 本教程中的作用 |
@@ -55,7 +55,7 @@ GitHub Pages 对外提供网站
 
 1. 使用 GitHub Free 账号。
 2. 将博客源码仓库设为 Public，也就是公开仓库。
-3. 使用 GitHub 提供的 `你的用户名.github.io` 网址。
+3. 使用 GitHub 提供的免费网址，本项目是 `https://yintaoc3-collab.github.io/my-blog/`。
 4. 本地保留源码，再额外保留一份备份。
 5. 固定 Hugo 和主题版本，更新前先测试。
 
@@ -108,10 +108,10 @@ Cloudflare 的 [Hugo 官方部署说明](https://developers.cloudflare.com/pages
 | 项目 | 应填写的值 |
 | --- | --- |
 | 用户名 | `yintaoc3-collab` |
-| 仓库名 | `yintaoc3-collab.github.io` |
-| 网站地址 | `https://yintaoc3-collab.github.io/` |
+| 仓库名 | `my-blog` |
+| 网站地址 | `https://yintaoc3-collab.github.io/my-blog/` |
 
-本教程已按用户名 `yintaoc3-collab` 配置完成：仓库名 `yintaoc3-collab.github.io`，网站地址 `https://yintaoc3-collab.github.io/`。上面的对照表用于说明用户名与仓库名的关系。
+本教程已按用户名 `yintaoc3-collab` 配置完成：仓库名 `my-blog`，网站地址 `https://yintaoc3-collab.github.io/my-blog/`。上面的对照表是本项目的实际配置。`my-blog` 是普通项目仓库，因此网址带 `/my-blog/`；名称为 `用户名.github.io` 的用户主页仓库才使用域名根路径。
 
 如果 `你的用户名.github.io` 仓库已存在，先查看里面是什么，不要新建同名仓库或覆盖原网站。可在另一份本地副本中准备新博客，再评估怎样接入已有仓库。
 
@@ -245,7 +245,7 @@ Get-FileHash -Algorithm SHA256 -LiteralPath '你下载的Hugo压缩包完整路�
 ```
 
 4. 等窗口显示 `Web Server is available`。
-5. 在浏览器打开 [本地预览](http://127.0.0.1:1313/)。
+5. 在浏览器打开 [本地预览](http://127.0.0.1:1321/)。
 6. 保持运行窗口打开。需要停止时，在该窗口按 `Ctrl+C`。
 
 `127.0.0.1` 代表这台电脑本身。这个预览只绑定本机，其他人不能拿这个地址访问你的博客；公开地址要在后面的上线步骤获得。
@@ -297,7 +297,7 @@ my-blog/
 2. 修改以下对应值，保留字段名称：
 
 ```yaml
-baseURL: "https://yintaoc3-collab.github.io/"
+baseURL: "https://yintaoc3-collab.github.io/my-blog/"
 title: "一只无辜的银"
 ```
 
@@ -529,12 +529,16 @@ cover:
 如果你想查看与正式发布一致、排除草稿的本地版本，先停止当前预览，再在终端执行：
 
 ```powershell
-.\.tools\hugo\hugo.exe server --bind 127.0.0.1 --port 1313 --baseURL http://127.0.0.1:1313/
+.\.tools\hugo\hugo.exe server --bind 127.0.0.1 --port 1321 --baseURL http://127.0.0.1:1321/
 ```
 
 它没有 `--buildDrafts`，只显示正式文章。检查完后 `Ctrl+C` 停止，继续写作时可再用 `start-blog.cmd`。
 
 **检查结果：** 构建成功，标题、菜单、文章、图片和链接都符合预期。
+
+### 15.1 正式版的二次元界面与启动方式
+
+正式目录已包含二次元插画、明暗切换和手机导航。start-blog.cmd 与 start-ui-preview.cmd 使用同一个启动流程；默认端口为 1321，被占用时自动选附近的空闲端口，同目录已有预览时直接复用。停止预览可以双击 stop-blog.cmd。日常操作见 docs\开始使用.html。
 
 ## 16. 初始化博客自己的 Git 仓库
 
@@ -625,14 +629,14 @@ git config --local --get user.email
 
 **目的：** 把博客源码存到自己的 GitHub 账号中。
 
-**前提：** 第 2 步检查过 `你的用户名.github.io` 仓库还不存在。若已存在，要接入已有仓库，先用附录说明处理。
+**前提：** 这一节用于将来从零重建。你当前的 `yintaoc3-collab/my-blog` 已经存在并接好了远端，日常更新直接 Commit 和 Push。连接已有仓库时使用附录说明，不创建同名仓库。
 
 **做法：**
 
 1. 按 `Ctrl+Shift+P`，打开 VS Code 命令面板。
 2. 输入 `Publish to GitHub`，选择匹配的命令。
 3. 如果要求登录，按 VS Code 的浏览器登录提示进入自己的 GitHub 账号，然后返回编辑器。
-4. 仓库名称填写 `yintaoc3-collab.github.io`（格式为 `你的用户名.github.io`）。
+4. 从零重建时仓库名称填写 `my-blog`；如果这个仓库已经存在，连接已有远端，不再用 Publish 创建同名仓库。
 5. 选择发布为 **Public / 公开仓库**。
 6. 按界面提示完成上传。
 7. 打开自己的仓库网页，检查源码是否出现。
@@ -694,7 +698,7 @@ git config --local --get user.email
 - 四篇 `example-*` 示例页面已消失。
 - 首页站名、作者、网址都是自己的信息，没有旧站名「嵌入式工坊」和 `YOUR_GITHUB_USERNAME`。
 - 搜索索引 `index.json` 能搜到现有文章。
-- `sitemap.xml` 与 `robots.txt` 里的网址是 `https://yintaoc3-collab.github.io/`。
+- `sitemap.xml` 与 `robots.txt` 里的网址是 `https://yintaoc3-collab.github.io/my-blog/`。
 - 四个空栏目仍保留 `_index.md`，菜单、搜索、首页在暂时没有文章时也正常显示。
 
 **上线验收**（GitHub Actions 跑完之后检查）：
@@ -772,7 +776,7 @@ VS Code 的 `Sync Changes / 同步更改` 通常先拉取、再推送；`Push / 
 需要额外完整备份 Git 历史时，可按官方方法进行镜像克隆：
 
 ```powershell
-git clone --mirror https://github.com/yintaoc3-collab/yintaoc3-collab.github.io.git blog-history-backup.git
+git clone --mirror https://github.com/yintaoc3-collab/my-blog.git blog-history-backup.git
 ```
 
 先把用户名换正确，在专门的备份目录中运行。镜像目录用于保管历史，不作为日常写文章的工作目录；它也不包含尚未提交的文件。
@@ -885,7 +889,7 @@ lastmod: 2026-10-05T20:00:00+08:00
 | `git` 无法识别 | Git 未安装或 VS Code 终端没刷新 | 安装官方 Git，关闭并重新打开 VS Code，再执行 `git --version` |
 | 直接输入 `hugo` 无法识别 | 本教程没有加入全局 PATH | 用 `.\.tools\hugo\hugo.exe`，或直接运行附带 CMD |
 | 本地网页打不开 | 预览未启动或已关闭 | 检查终端是否显示服务器地址，保持运行窗口打开 |
-| `address already in use` | 1313 端口已有程序占用 | 若之前博客预览还在，直接使用；否则按下方备用端口方式启动 |
+| `address already in use` | 1321 端口已有程序占用 | 若之前博客预览还在，直接使用；否则按下方备用端口方式启动 |
 | 新文章本地有，线上没有 | 仍是草稿、未来日期、没 Push 或部署失败 | 检查 `draft`、`date`、GitHub 源码和 Actions 最新运行 |
 | 保存后线上没变化 | 保存不是提交或上传 | 按第 23 步完成 Commit、Push 和部署确认 |
 | YAML 报错 | 缩进、引号或重复字段有问题 | 查看错误指出的文件与行号，恢复原来对齐并改正 |
@@ -911,7 +915,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Start-Blog.ps1
 附带 CMD 只给当前 PowerShell 进程设置执行策略，不修改系统级策略。若电脑由组织管理且禁止脚本，可直接运行已校验的 Hugo 可执行文件进行预览和构建；不需要更改组织策略：
 
 ```powershell
-.\.tools\hugo\hugo.exe server --bind 127.0.0.1 --port 1313 --baseURL http://127.0.0.1:1313/ --buildDrafts
+.\.tools\hugo\hugo.exe server --bind 127.0.0.1 --port 1321 --baseURL http://127.0.0.1:1321/ --buildDrafts
 ```
 
 ```powershell

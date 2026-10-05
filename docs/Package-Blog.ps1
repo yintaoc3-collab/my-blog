@@ -50,7 +50,7 @@ try {
     Copy-Item -LiteralPath $docsRoot -Destination (Join-Path $stageBlog 'docs') -Recurse -Force
     if (Test-Path -LiteralPath (Join-Path $stageBlog 'docs\.build')) { Remove-Item -LiteralPath (Join-Path $stageBlog 'docs\.build') -Recurse -Force }
 
-    $staged = Get-ChildItem -LiteralPath $stageRoot -Recurse -Force -File
+    $staged = Get-ChildItem -LiteralPath $stageRoot -Recurse -Force -File | Where-Object { $_.Name -ne '.hugo_build.lock' }
     Write-Host ('打包来源: ' + $blogRoot)
     Write-Host ('包内文件夹名: ' + $BlogFolderName + '   暂存文件数: ' + $staged.Count)
 

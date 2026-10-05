@@ -5,7 +5,7 @@ description: "参考来源、界面设计、运行方法、文章封面与维护
 
 # 银的个人工作台：二次元版 UI 与使用指南
 
-这是一份可以运行的 Hugo 博客源码。账号为 `yintaoc3-collab`，站名为「一只无辜的银」。新版在独立目录里完成；你的 `D:\本地博客` 和以前的 ZIP 保留原样。
+这是一份可以运行的 Hugo 博客源码。账号为 `yintaoc3-collab`，站名为「一只无辜的银」。正式版已整理到 `D:\博客正式版\my-blog` 并上线。日常在这个目录里编辑，旧目录和以前的 ZIP 保留作参考。
 
 ## 1. 这次参考了哪些网站
 
@@ -83,14 +83,14 @@ description: "参考来源、界面设计、运行方法、文章封面与维护
 做法：双击 `start-ui-preview.cmd`，或在源码根目录终端执行：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Start-Blog.ps1 -Port 1322
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Start-Blog.ps1 -Port 1321
 ```
 
 目的：让 Hugo 将 Markdown、模板和样式实时生成网页；草稿只在本地预览可见。
 
-检查：浏览器打开 <http://127.0.0.1:1322/>。终端应该显示该网址。关闭终端或按 `Ctrl+C` 后，预览结束。如果 1322 被占用，把命令中的端口改为其他空闲端口，并打开对应网址。
+检查：浏览器打开 <http://127.0.0.1:1321/>。终端应该显示该网址。关闭终端或按 `Ctrl+C` 后，预览结束。如果 1321 被占用，启动器会自动换到附近的空闲端口。以窗口显示、自动打开的网址为准。重复启动会复用这份目录已有的预览。
 
-交付时已运行的预览是 <http://127.0.0.1:1320/>，它由这次工作目录里的独立副本提供；从 ZIP 解压重新运行用 1322，避免冲突。
+正式版的两个预览按钮已统一。停止预览可按 `Ctrl+C`，或双击 `stop-blog.cmd`；只会停止这份目录的预览。
 
 ### 第四步：检查界面
 
@@ -183,16 +183,16 @@ tags: ["填写芯片平台", "填写技术标签"]
 
 ## 5. 如何替换当前博客界面
 
-建议先用新版独立目录试用。确认需要使用时，可把 UI 文件同步到 `D:\本地博客`，内容文件继续沿用原来的目录。
+建议先用新版独立目录试用。确认需要使用时，可把 UI 文件同步到 `D:\博客正式版\my-blog`，内容文件继续沿用原来的目录。
 
 1. 停止准备改动的那份本地预览，避免复制中途反复重建。
-2. 先将当前 `D:\本地博客` 做一份目录外备份。
+2. 先将当前 `D:\博客正式版\my-blog` 做一份目录外备份。
 3. 复制新版 `layouts` 目录和 `assets/css/extended` 目录到当前博客对应位置；新版有同名文件，覆盖前以备份为依据。
 4. 复制新版 `assets/images/anime-workbench.png` 与 `assets/images/anime-mascot.png` 到同名目录；首页模板会用 Hugo 在构建时生成缩小后的网页图片，漏掉这两张原图会导致构建失败。`static/images/workbench.svg` 为上一版插画，可一并保留。
 5. 复制 `scripts/Build-Blog.ps1` 和 `start-ui-preview.cmd`。这次只调整了构建输出清洁规则，现有 Pages 工作流可以继续使用。
 6. 如要以后从模板创建文章，复制新版的 `archetypes` 和 `docs/templates`。
-7. 用新的 `Start-Blog.ps1 -Port 1322` 命令预览，检查栏目、搜索、手机导航、文章内容。
-8. 验证后再提交 Git。初次上传先在登录后的 GitHub 中创建 `yintaoc3-collab.github.io` 仓库，按完整教程第 16～22 步操作；「Clone」仅用于克隆已经存在的仓库。
+7. 用新的 `Start-Blog.ps1 -Port 1321` 命令预览，检查栏目、搜索、手机导航、文章内容。
+8. 验证后再提交 Git。正式版已经连接 `yintaoc3-collab/my-blog` 并上线，后续提交和推送即可；「Clone」用于在新电脑上克隆这个已有仓库。
 
 目的：在不搬动文章的情况下替换显示层。若你已经新增内容，不要用新版的空 `content` 目录覆盖自己的内容。
 

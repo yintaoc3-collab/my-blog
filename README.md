@@ -1,55 +1,50 @@
-# UI 新版：银的个人工作台
-
-当前是 2026-10-06 二次元版：银发角色的电子工作台主图 + Q 版小角色。先阅读 [UI 新版方案与使用指南](docs/UI新版方案与使用指南.md)，配图与网上参考见 [二次元配图与参考来源](docs/二次元配图与参考来源.md)。双击 `start-ui-preview.cmd`，打开 http://127.0.0.1:1322/。新版仍采用 Hugo + PaperMod，真实文章尚未录入。
-
-原有完整教程在 `docs/从零搭建个人博客-完整指南.html`。下面保留基础包的通用说明。
-
----
-
 # 一只无辜的银 · 个人博客
 
-这是一个 Hugo + PaperMod 博客，已按 GitHub 账号 `yintaoc3-collab` 配置完成：站名“一只无辜的银”，网址 `https://yintaoc3-collab.github.io/`。
+正式工作目录：`D:\博客正式版\my-blog`。在这一个目录里编辑和写文章。
 
-本包源码是解压后的 `my-blog` 目录；教程放在 `docs\`。本次制作的独立副本位于 `outputs\银的博客-UI新版`，并未替换 `D:\本地博客`。请以本文件开头的新版预览方法为准。
+在线博客：<https://yintaoc3-collab.github.io/my-blog/>
 
-## 先做什么
+源码仓库：<https://github.com/yintaoc3-collab/my-blog>
 
-1. 双击 `start-blog.cmd`，保持窗口打开。
-2. 使用 `start-blog.cmd` 时打开 `http://127.0.0.1:1313/`；使用新版 `start-ui-preview.cmd` 时打开 `http://127.0.0.1:1322/`。预览进程只在启动窗口保持打开时运行。
-3. 用 VS Code 修改 `hugo.yaml` 和 `content/` 中的文章。
-4. 用 `build-blog.cmd` 检查正式构建；删除过文章时加 `--cleanDestinationDir`。
-5. 按 `docs\从零搭建个人博客-完整指南.html` 完成 GitHub Pages 上线。
+博客使用固定版本 Hugo 和 PaperMod，界面已包含二次元插画、明暗切换、手机导航，以及嵌入式作品、开源方案、技术笔记、好物分享四个栏目。真实文章暂时为空。
 
-## 工具按钮
+## 从这里开始
 
-| 文件 | 作用 |
+双击 `阅读使用说明.cmd`，阅读 [本地使用说明](docs/开始使用.html)。更详细的步骤在 [完整教程](docs/从零搭建个人博客-完整指南.html)。
+
+| 操作 | 双击的文件 | 结果 |
+| --- | --- | --- |
+| 预览博客 | `start-blog.cmd` | 自动打开浏览器，默认使用 `http://127.0.0.1:1321/` |
+| 预览博客（另一个入口） | `start-ui-preview.cmd` | 与上面的入口相同 |
+| 停止正式版预览 | `stop-blog.cmd` | 只停止这份目录启动的 Hugo 预览 |
+| 检查正式构建 | `build-blog.cmd` | 清洁生成 `public/`，不发布草稿 |
+| 备份源码 | `backup-blog.cmd` | 在 `.backups/` 新建 ZIP，不覆盖旧备份 |
+| 阅读说明 | `阅读使用说明.cmd` | 打开离线使用说明 |
+
+端口被其他程序占用时，启动脚本会自动选择附近的空闲端口；以启动窗口显示、自动打开的网址为准。重复启动会复用这份博客已有的预览。
+
+本地预览包含草稿。由启动窗口新开预览时，保持窗口打开；按 `Ctrl+C` 停止。也可以使用 `stop-blog.cmd` 停止已经运行的正式版预览。
+
+## 写自己的内容
+
+用 VS Code 打开整个 `my-blog` 文件夹，从 `docs/templates/` 复制相应模板到下面的栏目。每篇文章放在单独目录中，正文文件名为 `index.md`，图片可以和正文放在一起。
+
+| 内容 | 放在哪里 |
 | --- | --- |
-| `start-blog.cmd` | 本地预览（含草稿） |
-| `build-blog.cmd` | 正式构建（不含草稿） |
-| `backup-blog.cmd` | 源码备份到 `.backups\`，记得再复制到别的磁盘 |
-| `docs\Build-Guide.ps1` | 由 `docs\从零搭建个人博客-完整指南.md` 重新生成教程 HTML |
-| `docs\Package-Blog.ps1` | 重新打出交付基础包（同名文件不会被覆盖） |
+| 嵌入式作品 | `content/projects/项目英文名/index.md` |
+| 开源方案 | `content/opensource/方案英文名/index.md` |
+| 技术笔记 | `content/notes/笔记英文名/index.md` |
+| 好物分享 | `content/goodies/资源英文名/index.md` |
+| 个人介绍 | `content/about.md` |
 
-启动器只为当前 PowerShell 进程设置脚本运行策略，不改系统设置。`.tools\hugo\` 中是校验过的固定版本 Hugo；从 GitHub 重新克隆后该目录不存在，启动器会按固定 SHA-256 下载并校验。
+写作期间保留 `draft: true`。准备公开时改成 `draft: false`，确认日期不晚于今天，运行正式构建，再在 VS Code 的源代码管理中提交和推送。GitHub Actions 会自动更新网站。
 
-## 主要文件
+## 保留与恢复
 
-| 文件或目录 | 用途 |
-| --- | --- |
-| `hugo.yaml` | 网站名称、介绍、网址、菜单 |
-| `content/projects/` | 嵌入式作品 |
-| `content/opensource/` | 开源方案 |
-| `content/notes/` | 技术笔记 |
-| `content/goodies/` | 工具与资源 |
-| `content/about.md` | 个人介绍（尚有待填写处） |
-| `themes/PaperMod/` | 已固定版本的原始主题 |
-| `docs/` | 教程、教程模板与两个脚本 |
-| `.github/workflows/hugo.yaml` | GitHub 自动构建与发布流程 |
-| `VERSIONS.md` | 版本与下载校验值 |
-| `public/` | 自动生成的网页，不手动编辑，也不提交 |
+源码备份包含 `.github`、文章、图片、主题、脚本和教程；不含 `.git`、`.tools`、`.cache`、`.build`、`.backups`、`public`、`resources` 或 Hugo 构建锁文件。从源码备份恢复时，可以复制原目录的 `.tools/hugo/`，或由启动脚本下载并校验固定版本 Hugo。
 
-四个栏目的示例文章已经删除，删除前的原文保存在 `.backups\removed-examples-20261005.zip`。
+交付基础包额外包含便携 Hugo 和许可证，可以在没有安装 Hugo 的 Windows 电脑上运行。重打包使用 `docs/Package-Blog.ps1`，遇到同名 ZIP 会停止。
 
 ## 许可
 
-PaperMod 的原作者许可保留在 `themes/PaperMod/LICENSE`。本项目未替你给将来的文章、硬件方案或代码选择公开许可证；发布真实开源方案时请单独明确它的授权方式。
+PaperMod 原作者许可保留在 `themes/PaperMod/LICENSE`。将来发布真实文章、硬件方案或代码时，再为这些内容明确授权方式。

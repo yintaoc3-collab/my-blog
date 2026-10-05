@@ -53,7 +53,11 @@
       </ul>
     </li>
     <li><a href="#14-添加其他栏目示例文章已删除">14. 添加其他栏目（示例文章已删除）</a></li>
-    <li><a href="#15-检查正式构建">15. 检查正式构建</a></li>
+    <li><a href="#15-检查正式构建">15. 检查正式构建</a>
+      <ul>
+        <li><a href="#151-正式版的二次元界面与启动方式">15.1 正式版的二次元界面与启动方式</a></li>
+      </ul>
+    </li>
     <li><a href="#16-初始化博客自己的-git-仓库">16. 初始化博客自己的 Git 仓库</a></li>
     <li><a href="#17-设置本仓库的提交署名">17. 设置本仓库的提交署名</a></li>
     <li><a href="#18-在-vs-code-查看暂存与提交">18. 在 VS Code 查看、暂存与提交</a></li>
@@ -82,13 +86,13 @@
     <main>
       <div class="check">离线阅读版 · Windows / VS Code / Git · 可用浏览器 Ctrl+P 打印或保存为 PDF</div>
       <h1 id="从零搭建个人博客windows--vs-code-完整操作指南">从零搭建个人博客：Windows + VS Code 完整操作指南</h1>
-<p>整理日期：2026 年 10 月 5 日（2026 年 10 月 5 日按新版配置更新）。适用目标：展示嵌入式作品、发布开源方案、写技术笔记、分享工具和资源。</p>
+<p>整理日期：2026 年 10 月 5 日（2026 年 10 月 6 日按正式目录和已上线仓库更新）。适用目标：展示嵌入式作品、发布开源方案、写技术笔记、分享工具和资源。</p>
 <p>本教程统一采用 <strong>Hugo + PaperMod + GitHub Pages</strong>。在 Windows 电脑上用 VS Code 编辑，通过 VS Code 的 Git 界面提交、上传，由 GitHub 自动生成并发布网页。</p>
 <p>你已有 GitHub 账号，电脑上也已有 VS Code 和 Git。本教程仍写出环境检查方法，方便你以后换电脑时重新操作。</p>
-<p>你的博客源码放在 <code>D:\本地博客</code>，教程放在 <code>D:\本地博客\docs</code>。这个目录也是从原基础包复制来的保留副本：<code>C:\Users\42891\Documents\Codex\2026-10-05\n-n\outputs\my-blog</code>（未改动，作为最初版本保存）。</p>
-<p>博客已按你的账号配置好站名、作者和网址，站名是“一只无辜的银”。原来附带的四篇 <code>example-*</code> 示例文章<strong>已经删除</strong>（删除前的文件保留在 <code>.backups\removed-examples-20261005.zip</code>），四个栏目现在都是空的，只保留各自的 <code>_index.md</code>。<strong>目前只是本地文件，尚未创建你的 GitHub 仓库，也未公开发布。</strong></p>
-<p>先完成本地阶段，确认内容和样式，再完成上线阶段。每完成一步，都看一下本步的“检查结果”，符合之后再继续。</p>
-<p>本次交付依然是三个文件：本教程的 <code>.md</code> 原文、可双击用浏览器阅读的 <code>.html</code> 离线版，以及新版 <code>个人博客完整教程与基础包-已配置-yintaoc3-collab.zip</code>。ZIP 中包含 <code>my-blog/</code>（已配置好的博客源码）、<code>docs/</code>（两种教程、教程渲染脚本与新打包脚本，可随时重新生成）以及便携 Hugo。先全部解压，再打开博客目录；若你直接使用 <code>D:\本地博客</code> 这份现成文件夹，就无需再次解压。</p>
+<p>你的博客源码放在 <code>D:\博客正式版\my-blog</code>，教程放在 <code>D:\博客正式版\my-blog\docs</code>。这个目录也是从原基础包复制来的保留副本：<code>C:\Users\42891\Documents\Codex\2026-10-05\n-n\outputs\my-blog</code>（未改动，作为最初版本保存）。</p>
+<p>博客已按你的账号配置好站名、作者和网址，站名是“一只无辜的银”。原来附带的四篇 <code>example-*</code> 示例文章<strong>已经删除</strong>（删除前的文件保留在 <code>.backups\removed-examples-20261005.zip</code>），四个栏目现在都是空的，只保留各自的 <code>_index.md</code>。<strong>当前正式版已连接 <code>https://github.com/yintaoc3-collab/my-blog</code> 并完成 GitHub Pages 部署。在线地址是 <code>https://yintaoc3-collab.github.io/my-blog/</code>。本地默认预览端口为 1321，占用时会自动换到附近的空闲端口。</strong></p>
+<p>当前电脑上的正式版已经完成初始化与上线，日常优先阅读 <code>docs\开始使用.html</code>，然后从第 23 步继续写文章和维护。本教程仍保留从零安装与重建的完整过程；已有的初始化、创建仓库、首次上传步骤无需重复。</p>
+<p>本次交付依然是三个文件：本教程的 <code>.md</code> 原文、可双击用浏览器阅读的 <code>.html</code> 离线版，以及新版 <code>个人博客-正式版完成-yintaoc3-collab-20261006.zip</code>。ZIP 中包含 <code>my-blog/</code>（正式版源码），其内部的 <code>docs/</code> 包含使用说明、完整教程与界面指南，并带便携 Hugo、教程生成脚本和打包脚本。先全部解压，再打开博客目录；若你直接使用 <code>D:\博客正式版\my-blog</code> 这份现成文件夹，就无需再次解压。</p>
 <p><strong>怎样阅读：</strong> 第 0～15 步完成本地修改与验证，第 16～22 步完成 GitHub 上线，第 23～28 步用于日常更新与长期维护。附录是遇到特殊情况时使用的补充说明。命令只复制代码框内的内容，不要把解释文字或终端中的 <code>PS C:\...&gt;</code> 提示符也复制进去。每条命令运行完再输入下一条；占位文字必须先换成自己的信息。</p>
 <h2 id="0-先理解整个流程">0. 先理解整个流程</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>你在 VS Code 写 Markdown 文章和放图片
@@ -103,7 +107,7 @@
 </span></span><span style="display:flex;"><span>                ↓
 </span></span><span style="display:flex;"><span>GitHub Pages 对外提供网站
 </span></span><span style="display:flex;"><span>                ↓
-</span></span><span style="display:flex;"><span>别人访问 https://你的用户名.github.io/
+</span></span><span style="display:flex;"><span>别人访问 https://yintaoc3-collab.github.io/my-blog/
 </span></span></code></pre></div><table>
 	<thead>
 			<tr>
@@ -162,7 +166,7 @@
 <ol>
 <li>使用 GitHub Free 账号。</li>
 <li>将博客源码仓库设为 Public，也就是公开仓库。</li>
-<li>使用 GitHub 提供的 <code>你的用户名.github.io</code> 网址。</li>
+<li>使用 GitHub 提供的免费网址，本项目是 <code>https://yintaoc3-collab.github.io/my-blog/</code>。</li>
 <li>本地保留源码，再额外保留一份备份。</li>
 <li>固定 Hugo 和主题版本，更新前先测试。</li>
 </ol>
@@ -257,15 +261,15 @@
 			</tr>
 			<tr>
 					<td>仓库名</td>
-					<td><code>yintaoc3-collab.github.io</code></td>
+					<td><code>my-blog</code></td>
 			</tr>
 			<tr>
 					<td>网站地址</td>
-					<td><code>https://yintaoc3-collab.github.io/</code></td>
+					<td><code>https://yintaoc3-collab.github.io/my-blog/</code></td>
 			</tr>
 	</tbody>
 </table>
-<p>本教程已按用户名 <code>yintaoc3-collab</code> 配置完成：仓库名 <code>yintaoc3-collab.github.io</code>，网站地址 <code>https://yintaoc3-collab.github.io/</code>。上面的对照表用于说明用户名与仓库名的关系。</p>
+<p>本教程已按用户名 <code>yintaoc3-collab</code> 配置完成：仓库名 <code>my-blog</code>，网站地址 <code>https://yintaoc3-collab.github.io/my-blog/</code>。上面的对照表是本项目的实际配置。<code>my-blog</code> 是普通项目仓库，因此网址带 <code>/my-blog/</code>；名称为 <code>用户名.github.io</code> 的用户主页仓库才使用域名根路径。</p>
 <p>如果 <code>你的用户名.github.io</code> 仓库已存在，先查看里面是什么，不要新建同名仓库或覆盖原网站。可在另一份本地副本中准备新博客，再评估怎样接入已有仓库。</p>
 <p><strong>检查结果：</strong> 你知道自己的公开主页网址、用户名和计划使用的仓库名。</p>
 <h2 id="3-找到博客文件夹">3. 找到博客文件夹</h2>
@@ -347,7 +351,7 @@
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\</span><span style="color:#6639ba">start-blog</span><span style="color:#1f2328">.</span>cmd
 </span></span></code></pre></div><ol start="4">
 <li>等窗口显示 <code>Web Server is available</code>。</li>
-<li>在浏览器打开 <a href="http://127.0.0.1:1313/">本地预览</a>。</li>
+<li>在浏览器打开 <a href="http://127.0.0.1:1321/">本地预览</a>。</li>
 <li>保持运行窗口打开。需要停止时，在该窗口按 <code>Ctrl+C</code>。</li>
 </ol>
 <p><code>127.0.0.1</code> 代表这台电脑本身。这个预览只绑定本机，其他人不能拿这个地址访问你的博客；公开地址要在后面的上线步骤获得。</p>
@@ -385,7 +389,7 @@
 <li>在 VS Code 左侧点击 <code>hugo.yaml</code>。</li>
 <li>修改以下对应值，保留字段名称：</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">baseURL</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;https://yintaoc3-collab.github.io/&#34;</span><span style="color:#fff">
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">baseURL</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;https://yintaoc3-collab.github.io/my-blog/&#34;</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#0550ae">title</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;一只无辜的银&#34;</span><span style="color:#fff">
 </span></span></span></code></pre></div><ol start="3">
 <li>确认 <code>baseURL</code> 中的用户名是你的真实 GitHub 用户名。</li>
@@ -592,9 +596,11 @@
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe <span style="color:#1f2328">-</span>-gc <span style="color:#1f2328">-</span>-minify <span style="color:#1f2328">-</span>-cleanDestinationDir
 </span></span></code></pre></div><p><code>--cleanDestinationDir</code> 只清理生成目录，务必让它只作用在 <code>public/</code>（或专门的输出目录）上，不要指向博客根目录或 <code>docs</code>。</p>
 <p>如果你想查看与正式发布一致、排除草稿的本地版本，先停止当前预览，再在终端执行：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe server <span style="color:#1f2328">-</span>-bind <span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span>1 <span style="color:#1f2328">-</span>-port <span style="color:#0550ae">1313</span> <span style="color:#1f2328">-</span>-baseURL http<span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#1f2328">//</span><span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span><span style="color:#0550ae">1</span><span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#0550ae">1313</span><span style="color:#1f2328">/</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe server <span style="color:#1f2328">-</span>-bind <span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span>1 <span style="color:#1f2328">-</span>-port <span style="color:#0550ae">1321</span> <span style="color:#1f2328">-</span>-baseURL http<span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#1f2328">//</span><span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span><span style="color:#0550ae">1</span><span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#0550ae">1321</span><span style="color:#1f2328">/</span>
 </span></span></code></pre></div><p>它没有 <code>--buildDrafts</code>，只显示正式文章。检查完后 <code>Ctrl+C</code> 停止，继续写作时可再用 <code>start-blog.cmd</code>。</p>
 <p><strong>检查结果：</strong> 构建成功，标题、菜单、文章、图片和链接都符合预期。</p>
+<h3 id="151-正式版的二次元界面与启动方式">15.1 正式版的二次元界面与启动方式</h3>
+<p>正式目录已包含二次元插画、明暗切换和手机导航。start-blog.cmd 与 start-ui-preview.cmd 使用同一个启动流程；默认端口为 1321，被占用时自动选附近的空闲端口，同目录已有预览时直接复用。停止预览可以双击 stop-blog.cmd。日常操作见 docs\开始使用.html。</p>
 <h2 id="16-初始化博客自己的-git-仓库">16. 初始化博客自己的 Git 仓库</h2>
 <p><strong>目的：</strong> 让博客具备修改历史，并让 VS Code 把它识别成独立项目。</p>
 <p><strong>做法：</strong></p>
@@ -649,13 +655,13 @@
 <p>参考：<a href="https://code.visualstudio.com/docs/sourcecontrol/quickstart">VS Code 源代码管理入门</a>。</p>
 <h2 id="19-从-vs-code-发布源码仓库到-github">19. 从 VS Code 发布源码仓库到 GitHub</h2>
 <p><strong>目的：</strong> 把博客源码存到自己的 GitHub 账号中。</p>
-<p><strong>前提：</strong> 第 2 步检查过 <code>你的用户名.github.io</code> 仓库还不存在。若已存在，要接入已有仓库，先用附录说明处理。</p>
+<p><strong>前提：</strong> 这一节用于将来从零重建。你当前的 <code>yintaoc3-collab/my-blog</code> 已经存在并接好了远端，日常更新直接 Commit 和 Push。连接已有仓库时使用附录说明，不创建同名仓库。</p>
 <p><strong>做法：</strong></p>
 <ol>
 <li>按 <code>Ctrl+Shift+P</code>，打开 VS Code 命令面板。</li>
 <li>输入 <code>Publish to GitHub</code>，选择匹配的命令。</li>
 <li>如果要求登录，按 VS Code 的浏览器登录提示进入自己的 GitHub 账号，然后返回编辑器。</li>
-<li>仓库名称填写 <code>yintaoc3-collab.github.io</code>（格式为 <code>你的用户名.github.io</code>）。</li>
+<li>从零重建时仓库名称填写 <code>my-blog</code>；如果这个仓库已经存在，连接已有远端，不再用 Publish 创建同名仓库。</li>
 <li>选择发布为 <strong>Public / 公开仓库</strong>。</li>
 <li>按界面提示完成上传。</li>
 <li>打开自己的仓库网页，检查源码是否出现。</li>
@@ -700,7 +706,7 @@
 <li>四篇 <code>example-*</code> 示例页面已消失。</li>
 <li>首页站名、作者、网址都是自己的信息，没有旧站名「嵌入式工坊」和 <code>YOUR_GITHUB_USERNAME</code>。</li>
 <li>搜索索引 <code>index.json</code> 能搜到现有文章。</li>
-<li><code>sitemap.xml</code> 与 <code>robots.txt</code> 里的网址是 <code>https://yintaoc3-collab.github.io/</code>。</li>
+<li><code>sitemap.xml</code> 与 <code>robots.txt</code> 里的网址是 <code>https://yintaoc3-collab.github.io/my-blog/</code>。</li>
 <li>四个空栏目仍保留 <code>_index.md</code>，菜单、搜索、首页在暂时没有文章时也正常显示。</li>
 </ul>
 <p><strong>上线验收</strong>（GitHub Actions 跑完之后检查）：</p>
@@ -758,7 +764,7 @@
 </ol>
 <p>附带脚本备份的是源码，包括尚未提交的已保存文件；不包含 <code>.git</code> 历史、本地 Hugo 程序和生成的 <code>public/</code>。GitHub 上保存已经推送的提交历史。</p>
 <p>需要额外完整备份 Git 历史时，可按官方方法进行镜像克隆：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git clone <span style="color:#1f2328">-</span>-mirror https<span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#1f2328">//</span>github<span style="color:#1f2328">.</span>com<span style="color:#1f2328">/</span><span style="color:#6639ba">yintaoc3-collab</span><span style="color:#1f2328">/</span><span style="color:#6639ba">yintaoc3-collab</span><span style="color:#1f2328">.</span>github<span style="color:#1f2328">.</span>io<span style="color:#1f2328">.</span>git <span style="color:#6639ba">blog-history</span>-backup<span style="color:#1f2328">.</span>git
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>git clone <span style="color:#1f2328">-</span>-mirror https<span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#1f2328">//</span>github<span style="color:#1f2328">.</span>com<span style="color:#1f2328">/</span><span style="color:#6639ba">yintaoc3-collab</span><span style="color:#1f2328">/</span><span style="color:#6639ba">my-blog</span><span style="color:#1f2328">.</span>git <span style="color:#6639ba">blog-history</span>-backup<span style="color:#1f2328">.</span>git
 </span></span></code></pre></div><p>先把用户名换正确，在专门的备份目录中运行。镜像目录用于保管历史，不作为日常写文章的工作目录；它也不包含尚未提交的文件。</p>
 <h3 id="251-教程与打包能力一起在包里">25.1 教程与打包能力一起在包里</h3>
 <p>基础包内除了博客源码，还带着 <code>docs</code> 文件夹，换电脑或换解压目录后仍能更新教程、重新打包，不依赖任何外部目录：</p>
@@ -903,7 +909,7 @@
 			</tr>
 			<tr>
 					<td><code>address already in use</code></td>
-					<td>1313 端口已有程序占用</td>
+					<td>1321 端口已有程序占用</td>
 					<td>若之前博客预览还在，直接使用；否则按下方备用端口方式启动</td>
 			</tr>
 			<tr>
@@ -977,7 +983,7 @@
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powershell<span style="color:#1f2328">.</span>exe -NoProfile -ExecutionPolicy Bypass <span style="color:#0550ae">-File</span> <span style="color:#1f2328">.\</span>scripts<span style="color:#1f2328">\</span><span style="color:#6639ba">Start-Blog</span><span style="color:#1f2328">.</span>ps1 -Port <span style="color:#0550ae">1314</span>
 </span></span></code></pre></div><p>然后打开 <code>http://127.0.0.1:1314/</code>。不要为了启动第二份预览随意结束其他程序。</p>
 <p>附带 CMD 只给当前 PowerShell 进程设置执行策略，不修改系统级策略。若电脑由组织管理且禁止脚本，可直接运行已校验的 Hugo 可执行文件进行预览和构建；不需要更改组织策略：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe server <span style="color:#1f2328">-</span>-bind <span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span>1 <span style="color:#1f2328">-</span>-port <span style="color:#0550ae">1313</span> <span style="color:#1f2328">-</span>-baseURL http<span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#1f2328">//</span><span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span><span style="color:#0550ae">1</span><span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#0550ae">1313</span><span style="color:#1f2328">/</span> <span style="color:#1f2328">-</span>-buildDrafts
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe server <span style="color:#1f2328">-</span>-bind <span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span>1 <span style="color:#1f2328">-</span>-port <span style="color:#0550ae">1321</span> <span style="color:#1f2328">-</span>-baseURL http<span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#1f2328">//</span><span style="color:#0550ae">127.0</span><span style="color:#1f2328">.</span>0<span style="color:#1f2328">.</span><span style="color:#0550ae">1</span><span style="color:#f6f8fa;background-color:#82071e">:</span><span style="color:#0550ae">1321</span><span style="color:#1f2328">/</span> <span style="color:#1f2328">-</span>-buildDrafts
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#1f2328">.\.</span>tools<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">\</span>hugo<span style="color:#1f2328">.</span>exe <span style="color:#1f2328">-</span>-gc <span style="color:#1f2328">-</span>-minify
 </span></span></code></pre></div><h2 id="附录-a如果自己的博客仓库已经存在">附录 A：如果自己的博客仓库已经存在</h2>
 <p>此分支仅在第 2 步确认已有同名仓库时使用，不要与“Publish to GitHub 新建仓库”同时做。</p>
