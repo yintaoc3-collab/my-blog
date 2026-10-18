@@ -1,0 +1,22 @@
+{{ define "main" }}
+<style>
+.rd-portal{max-width:920px;margin:40px auto 80px;padding:24px}.rd-eyebrow{font-size:12px;letter-spacing:.12em;color:#d44c64;margin:0 0 16px}.rd-portal h1{font-size:clamp(28px,5vw,46px);line-height:1.3;margin-bottom:20px}.rd-lead{max-width:620px;line-height:1.9;color:var(--secondary,#707682);font-size:16px}.rd-actions{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0}.rd-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 22px;border:1px solid #d44c64;border-radius:8px;color:#d44c64;text-decoration:none;font-size:14px}.rd-actions a:first-child{background:#d93050;color:white}.rd-actions a:focus-visible{outline:3px solid #e89aab;outline-offset:4px}.rd-info{border:1px solid var(--border,#e4e6ec);border-radius:12px;padding:24px;margin:30px 0;background:var(--entry,#fff)}.rd-info h2{font-size:19px;margin:0 0 16px}.rd-info ol{padding-left:22px;line-height:2.1;color:var(--secondary,#707682);font-size:14px}.rd-info p{font-size:14px;line-height:1.9;color:var(--secondary,#707682)}.rd-foot{font-size:12px;line-height:1.9;color:var(--secondary,#707682)}
+</style>
+<article class="rd-portal">
+  <p class="rd-eyebrow">RED DESK / 本机工作空间</p>
+  <h1>我的小红书工作台</h1>
+  <p class="rd-lead">集中管理自己的账号、查看后台统计、准备发布草稿。点击下方入口，在这台 Windows 电脑上继续工作。</p>
+  <div class="rd-actions">
+    <a href="http://127.0.0.1:8765/#accounts" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">打开账号工作台 ↗</a>
+    <a href="http://127.0.0.1:8765/#publish" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">进入发布中心 ↗</a>
+    <a href="http://127.0.0.1:8765/#plugins" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">连接创作插件 ↗</a>
+  </div>
+  <section class="rd-info">
+    <h2>从网站进入，本机持续运行</h2>
+    <ol><li>使用已安装工作台的电脑。登录 Windows 后，工作台会在后台自动启动。</li><li>打开账号工作台，为每个账号扫码登录一次。之后复用该账号保存的登录目录。</li><li>关闭网页后后台继续运行。重新打开入口，即可回到自己的账号和草稿。</li></ol>
+    <p>如果入口打不开，请双击安装目录中的 <strong>start.bat</strong>，等待后台启动后再打开。电脑关机或休眠时无法同步；平台要求验证或登录过期时，需要重新扫码。</p>
+  </section>
+  <p class="rd-foot">账号、登录信息与草稿保存在自己的电脑上，不上传此博客。这个页面仅提供入口，不读取本机账号数据。在其他电脑或手机上打开，需要该设备另行安装工作台。</p>
+</article>
+{{ end }}
+
